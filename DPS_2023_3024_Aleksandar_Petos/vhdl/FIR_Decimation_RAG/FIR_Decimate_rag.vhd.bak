@@ -1,0 +1,311 @@
+library IEEE;  
+use IEEE.std_logic_1164.all;   
+use IEEE.std_logic_signed.all;   
+use ieee.numeric_std.all;
+ 
+entity FIR_Decimate_rag is  -- VHDL projects
+	 generic	(  
+				  INPUT_WIDTH	: integer :=8;		-- input width defined by user  
+				  OUTPUT_WIDTH	: integer :=16;	-- output width defined by user  
+				  COEF_WIDTH	: integer :=8;		-- coefficient width defined by user  
+				  NUM_TAPS		: integer :=16		-- filter order
+				); 	
+	 port (
+			clk	: in	std_logic; 
+			reset	: in	std_logic;	
+			Din	: in	std_logic_vector(INPUT_WIDTH-1 downto 0);	-- input data 
+			Dout	: out	std_logic_vector(OUTPUT_WIDTH-1 downto 0)	-- output data 
+			); 
+end FIR_Decimate_rag;  
+ 
+architecture behavioral of FIR_Decimate_rag is  
+	constant CONVERSION_FACTOR : integer := 2;
+	constant  TAPS_PER_PHASE : integer := 8;	
+	type coeficient_type is array (0 to NUM_TAPS-1) of std_logic_vector(COEF_WIDTH-1 downto 0);  
+	type filter_type is array (0 to TAPS_PER_PHASE-1) of std_logic_vector(COEF_WIDTH-1 downto 0); 
+-----------------------------------FIR filter coefficients----------------------------------------
+	constant coeficient: coeficient_type := (	x"FE",
+												x"FE",
+												x"03",
+												x"06",
+												x"FE",
+												x"F4",
+												x"03",
+												x"28",
+												x"3D",
+												x"28",
+												x"03",
+												x"F4",
+												x"FE",
+												x"06",
+												x"03",
+												x"FE"
+												);
+	constant coeficient0: filter_type := (	coeficient(0),
+											coeficient(2),
+											coeficient(4),
+											coeficient(6),
+											coeficient(8),
+											coeficient(10),
+											coeficient(12),
+											coeficient(14)
+											);		
+											
+	constant coeficient1: filter_type := (	coeficient(1),
+											coeficient(3),
+											coeficient(5),
+											coeficient(7),
+											coeficient(9),
+											coeficient(11),
+											coeficient(13),
+											coeficient(15)
+											);		
+											
+	-- ctrl+shift+K uncomment, ctrl + K comment									
+----------------------------------------------------------------------------------------------                                     
+	 
+	signal Din0_reg, Din1_reg : std_logic_vector(INPUT_WIDTH-1 downto 0);
+	type multipliers_out_type is array (0 to TAPS_PER_PHASE-1) of std_logic_vector(INPUT_WIDTH+COEF_WIDTH-1 downto 0);  
+	signal multipliers_out0, multipliers_out1 : multipliers_out_type;  
+	type adders_out_type is array (0 to TAPS_PER_PHASE-1) of std_logic_vector(INPUT_WIDTH+COEF_WIDTH-1 downto 0);  
+	signal adders_out0, adders_out1, adders_in0, adders_in1 : adders_out_type;
+	signal temporary : adders_out_type := (others => (others => '0'));
+	signal counter, i : integer := 0;
+	type w_signal_type is array (0 to TAPS_PER_PHASE) of std_logic_vector(INPUT_WIDTH+COEF_WIDTH-1 downto 0); 
+	-----------------------------------------------------------------------
+	signal phase_counter : integer := 0;
+	signal y0 : std_logic_vector(OUTPUT_WIDTH-1 downto 0) := (others => '0');
+	signal y1 : std_logic_vector(OUTPUT_WIDTH-1 downto 0) := (others => '0');
+	
+	-----------------------------------------------------------------------
+	signal shift_resized0,shift_resized1  : multipliers_out_type := (others => (others => '0'));
+	signal negative_resized0, negative_resized1 : multipliers_out_type := (others => (others => '0'));
+	signal w_signal0, w_signal1 : w_signal_type := (others => (others => '0'));
+
+	constant NUM_SHIFTED_ELEMENTS : integer := 5;
+	constant NUM_NEGATED_ELEMENTS : integer := 5;
+	constant SHIFT_0: integer := 0;
+	constant SHIFT_1: integer := 1;
+	constant SHIFT_2: integer := 2;
+	constant SHIFT_3: integer := 3;
+	constant SHIFT_4: integer := 4;
+	constant SHIFT_5: integer := 5;
+	constant SHIFT_6: integer := 6;
+	constant SHIFT_7: integer := 7;
+	constant SHIFT_8: integer := 8;
+	constant SHIFT_9: integer := 9;
+	constant SHIFT_10: integer := 10;
+	constant SHIFT_11: integer := 11;
+	-----------------------------------------------------------------------
+
+begin  
+	------------------------------------------------------------------------
+	-- DIRECT TRANSPOSED DECIMATOR
+	------------------------------------------------------------------------
+	-- MULTIPLIER BLOCK
+	-- COEFFICIENTS
+	-- w1 <= Din; 			shift_resized(SHIFT_0)
+	-- w4 <= w1 sll 2; 		shift_resized(SHIFT_2)
+	-- w3 <= w4 - w1;  		w_signal(SHIFT_0)
+	-- w8 <= w1 sll 3; 		shift_resized(SHIFT_3)
+	-- w6 <= w8 - w2; 		w_signal(SHIFT_1) 
+	-- w32 <= w1 sll 5; 	shift_resized(SHIFT_5)
+	-- w31 <= w32 - w1; 	w_signal(SHIFT_2)
+	-- w12 <= w4 + w8; 		w_signal(SHIFT_3)
+	-- w48 <= w3 sll 4; 	w_signal(SHIFT_5)
+	-- w40 <= w48 - w8; 	w_signal(SHIFT_6) 
+	-- w2 <= w1 sll 1; 		shift_resized(SHIFT_1)
+	-- w2_ <= -w2; 			negative_resized(SHIFT_1) 
+	-- w12_ <= -w12; 		w_signal(SHIFT_4)
+	-- w62 <= w31 sll 1; 	w_signal(SHIFT_7) 
+	-- w61 <= w62 - w1;		w_signal(SHIFT_8)
+	-- 15 elements for calculating
+	-----------------------------------------------------------------------
+	-- MAPPING ELEMENTS
+	-- FILTER 0														FILTER 1
+	-- Y0 <= w3; 	w_signal0(SHIFT_0)							 	Y1 <= w2_; 		negative_resized1(SHIFT_1) 
+	-- Y2 <= w2_; 	negative_resized0(SHIFT_1) 						Y3 <= w6; 		w_signal1(SHIFT_1) 
+	-- Y4 <= w3; 	w_signal0(SHIFT_0) 								Y5 <= w12_; 	w_signal1(SHIFT_4) 
+	-- Y6 <= w61; 	w_signal0(SHIFT_8) 								Y7 <= w40; 		w_signal1(SHIFT_6) 
+	-- Y8 <= w3; 	w_signal0(SHIFT_0) 								Y9 <= w40; 		w_signal1(SHIFT_6) 
+	-- Y110 <= w2_; negative_resized0(SHIFT_1) 						Y11 <= w12_; 	w_signal1(SHIFT_4) 									
+	-- Y12 <= w3; 	w_signal0(SHIFT_0) 								Y13 <= w6; 		w_signal1(SHIFT_1) 
+	-- Y14 <= w2_; 	negative_resized0(SHIFT_1) 	 					Y15 <= w2_; 	negative_resized1(SHIFT_1) 
+
+	-----------------------------------------------------------------------
+	
+	
+	-----------------------------------------------------------------------
+	GEN_SHIFT_BLOCK_0: for i in 0 to (NUM_SHIFTED_ELEMENTS) generate  
+	begin  
+		shift_resized0(i)((shift_resized0(i)'length - 1) downto (Din0_reg'length + i)) <= ((shift_resized0(i)'length - 1) downto (Din0_reg'length + i) => Din0_reg(Din0_reg'length - 1));
+		shift_resized0(i)(Din0_reg'length -1 + i downto i)<= Din0_reg;
+		negative_resized0(i) <= not(shift_resized0(i)) + x"0001";
+	end generate GEN_SHIFT_BLOCK_0; 
+	w_signal0(SHIFT_0) <= shift_resized0(SHIFT_2) - shift_resized0(SHIFT_0);
+	
+	w_signal0(SHIFT_1) <= shift_resized0(SHIFT_3) - shift_resized0(SHIFT_1);
+	w_signal0(SHIFT_2) <= shift_resized0(SHIFT_5) - shift_resized0(SHIFT_0);
+	w_signal0(SHIFT_3) <= shift_resized0(SHIFT_2) + shift_resized0(SHIFT_3);
+	w_signal0(SHIFT_4) <= not(w_signal0(SHIFT_3)) + x"0001";
+	
+	w_signal0(SHIFT_5)((w_signal0(SHIFT_5)'length - 1) downto SHIFT_4) <= w_signal0(SHIFT_0)((w_signal0(SHIFT_0)'length - 1 - SHIFT_4) downto 0);
+	w_signal0(SHIFT_5)(SHIFT_4 - 1 downto 0) <= "0000";
+	
+	w_signal0(SHIFT_6) <= w_signal0(SHIFT_5) -  shift_resized0(SHIFT_3);
+	
+	w_signal0(SHIFT_7)((w_signal0(SHIFT_7)'length - 1) downto SHIFT_1) <= w_signal0(SHIFT_2)((w_signal0(SHIFT_2)'length - 1 - SHIFT_1) downto 0);
+	w_signal0(SHIFT_7)(0) <= '0';
+	
+	w_signal0(SHIFT_8) <= w_signal0(SHIFT_7) - shift_resized0(SHIFT_0);
+	 
+	 
+	-----------------------------------------------------------------------
+	GEN_SHIFT_BLOCK_1: for i in 0 to (NUM_SHIFTED_ELEMENTS) generate  
+	begin  
+		shift_resized1(i)((shift_resized1(i)'length - 1) downto (Din1_reg'length + i)) <= ((shift_resized1(i)'length - 1) downto (Din1_reg'length + i) => Din1_reg(Din1_reg'length - 1));
+		shift_resized1(i)(Din1_reg'length -1 + i downto i)<= Din1_reg;
+		negative_resized1(i) <= not(shift_resized1(i)) + x"0001";
+	end generate GEN_SHIFT_BLOCK_1; 
+	w_signal1(SHIFT_0) <= shift_resized1(SHIFT_2) - shift_resized1(SHIFT_0);
+	w_signal1(SHIFT_1) <= shift_resized1(SHIFT_3) - shift_resized1(SHIFT_1);
+	w_signal1(SHIFT_2) <= shift_resized1(SHIFT_5) - shift_resized1(SHIFT_0);
+	w_signal1(SHIFT_3) <= shift_resized1(SHIFT_2) + shift_resized1(SHIFT_3);
+	w_signal1(SHIFT_4) <= not(w_signal1(SHIFT_3)) + x"0001";
+	
+	w_signal1(SHIFT_5)((w_signal1(SHIFT_5)'length - 1) downto SHIFT_4) <= w_signal1(SHIFT_0)((w_signal1(SHIFT_0)'length - 1 - SHIFT_4) downto 0);
+	w_signal1(SHIFT_5)(SHIFT_4 - 1 downto 0) <= "0000";
+	
+	w_signal1(SHIFT_6) <= w_signal1(SHIFT_5) -  shift_resized1(SHIFT_3);
+	
+	w_signal1(SHIFT_7)((w_signal1(SHIFT_7)'length - 1) downto SHIFT_1) <= w_signal1(SHIFT_2)((w_signal1(SHIFT_2)'length - 1 - SHIFT_1) downto 0);
+	w_signal1(SHIFT_7)(0) <= '0';
+	
+	w_signal1(SHIFT_8) <= w_signal1(SHIFT_7) - shift_resized1(SHIFT_0);
+	
+	
+	-----------------------------------------------------------------------
+	-- FILTER 0 MAPPING
+	-- COEFF 7
+	multipliers_out0(0) <= w_signal0(SHIFT_0) when phase_counter = 1 ;
+	adders_in0(0) <= multipliers_out0(0) when phase_counter = 1;
+	
+	-- COEFF 6
+	multipliers_out0(1) <= negative_resized0(SHIFT_1);
+	adders_in0(1) <= multipliers_out0(1) + adders_out0(0) ;
+	
+	-- COEFF 5
+	multipliers_out0(2) <= w_signal0(SHIFT_0);
+	adders_in0(2) <= multipliers_out0(2) + adders_out0(1);
+	
+	-- COEFF 4
+	multipliers_out0(3) <= w_signal0(SHIFT_8);
+	adders_in0(3) <= multipliers_out0(3) + adders_out0(2);
+	
+	-- COEFF 3
+	multipliers_out0(4) <= w_signal0(SHIFT_0);
+	adders_in0(4) <= multipliers_out0(4) + adders_out0(3);
+	
+	-- COEFF 2
+	multipliers_out0(5) <= negative_resized0(SHIFT_1);
+	adders_in0(5) <= multipliers_out0(5) + adders_out0(4);
+	
+	-- COEFF 1
+	multipliers_out0(6) <= w_signal0(SHIFT_0);
+	adders_in0(6) <= multipliers_out0(6) + adders_out0(5);
+	
+	-- COEFF 0
+	multipliers_out0(7) <= negative_resized0(SHIFT_1);
+	adders_in0(7) <= multipliers_out0(7) + adders_out0(6);
+	
+	
+	-- FILTER 1 MAPPING
+	-- COEFF 7
+	multipliers_out1(0) <= negative_resized1(SHIFT_1) when phase_counter = 0;
+	adders_in1(0) <= multipliers_out1(0) when phase_counter = 0;
+	
+	-- COEFF 6
+	multipliers_out1(1) <= w_signal1(SHIFT_1);
+	adders_in1(1) <= multipliers_out1(1) + adders_out1(0);
+	
+	-- COEFF 5
+	multipliers_out1(2) <= w_signal1(SHIFT_4);
+	adders_in1(2) <= multipliers_out1(2) + adders_out1(1);
+	
+	-- COEFF 4
+	multipliers_out1(3) <= w_signal1(SHIFT_6);
+	adders_in1(3) <= multipliers_out1(3) + adders_out1(2);
+
+	-- COEFF 3
+	multipliers_out1(4) <= w_signal1(SHIFT_6);
+	adders_in1(4) <= multipliers_out1(4) + adders_out1(3);
+
+	-- COEFF 2
+	multipliers_out1(5) <= w_signal1(SHIFT_4);
+	adders_in1(5) <= multipliers_out1(5) + adders_out1(4);
+
+	-- COEFF 1
+	multipliers_out1(6) <= w_signal1(SHIFT_1);
+	adders_in1(6) <= multipliers_out1(6) + adders_out1(5);
+	
+	-- COEFF 0
+	multipliers_out1(7) <= negative_resized1(SHIFT_1);
+	adders_in1(7) <= multipliers_out1(7) + adders_out1(6);
+	
+	
+	phase_counter_process: process (reset,clk)
+	begin
+		if (reset = '1') then
+			phase_counter<= 0;
+		elsif (rising_edge(clk)) then
+			if phase_counter > 0 then
+				phase_counter <= phase_counter - 1;        
+			else
+				phase_counter <= CONVERSION_FACTOR-1;
+			end if; 
+
+		end if;
+	end process phase_counter_process;
+
+	
+	shift_reg_proc: process (reset,clk)
+	begin
+		if (reset = '1') then
+			Din0_reg<= (others => '0');
+			Din1_reg<= (others => '0');
+			adders_out0 <= (others => (others => '0'));
+			adders_out1 <= (others => (others => '0'));
+		elsif (rising_edge(clk)) then
+			
+			if (phase_counter = 1) then
+				Din0_reg <= Din;
+				for i in 0 to (TAPS_PER_PHASE-1) loop
+					adders_out0(i) <= adders_in0(i);	
+				end loop;
+				
+			else
+				Din1_reg <= Din;
+				for i in 0 to (TAPS_PER_PHASE-1) loop
+					adders_out1(i) <= adders_in1(i);	
+				end loop;
+				
+			end if;
+		end if;
+	end process shift_reg_proc;
+
+    output_process: process(clk)
+	begin
+		if(rising_edge(clk)) then
+			if (phase_counter = 0) then
+				Dout <= y0 + y1;
+			end if;
+		end if;
+	end process output_process;
+	
+	y1<= adders_out1(TAPS_PER_PHASE-1);
+	y0 <= adders_out0(TAPS_PER_PHASE-1);
+	
+ end behavioral;
+	
+ 
+ 
