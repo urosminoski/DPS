@@ -1,0 +1,17 @@
+C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/src/firCoeff.vhd {1 {vcom -work work -2008 -explicit -stats=none C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/src/firCoeff.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling package firCoeff
+
+} {} {}} C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/dep/standard_additions_c.vhdl {1 {vcom -work work -2008 -explicit -stats=none C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/dep/standard_additions_c.vhdl
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Compiling package standard_additions
+-- Loading package TEXTIO
+-- Compiling package body standard_additions
+-- Loading package standard_additions
+
+} {} {}}
