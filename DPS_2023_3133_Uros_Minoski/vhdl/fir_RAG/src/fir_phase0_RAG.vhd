@@ -81,7 +81,7 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			w15		<= w16 - 1;
+			w15		<= w16 - w1;
 			w8 		<= sla_manual(w1, 3, C_MAC_WIDTH);
 			w1_n 	<= not w1 + 1;
 			w2 		<= sla_manual(w1, 1, C_MAC_WIDTH);
