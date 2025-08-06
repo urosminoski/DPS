@@ -81,7 +81,7 @@ begin
 	w1 	<= resize(signed(xin_reg), C_MAC_WIDTH);
 	w2 	<= sla_manual(w1, 1, C_MAC_WIDTH);
 	w16 <= sla_manual(w1, 4, C_MAC_WIDTH);
-	w15	<= w16 - 1;
+	w15	<= w16 - w1;
 	w8 	<= sla_manual(w1, 3, C_MAC_WIDTH);
 	w8_n <= not w8 + 1;
 	w23 <= w15 + w8;
