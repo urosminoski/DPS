@@ -24,11 +24,11 @@ architecture tb of tb_fir_transposed is
 	
 	signal out_ready : std_logic := '0';
 	-- "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\moj_rad\fir_direct\data\xin.txt"
-	file input_file 	: text open read_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\fir_RAG\data\xin_q1n_phase1.txt";
-	file output_file 	: text open write_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\fir_RAG\data\xout_phase0.txt";
+	-- file input_file 	: text open read_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\fir_RAG\data\xin_q1n_phase1.txt";
+	-- file output_file 	: text open write_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\fir_RAG\data\xout_phase0.txt";
 	
-	-- file input_file 	: text open read_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\fir_RAG\data\xin_q1n_phase0.txt";
-	-- file output_file 	: text open write_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\fir_RAG\data\xout_phase1.txt";
+	file input_file 	: text open read_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\fir_RAG\data\xin_q1n_phase0.txt";
+	file output_file 	: text open write_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\fir_RAG\data\xout_phase1.txt";
 	
 begin
 	
