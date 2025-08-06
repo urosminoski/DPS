@@ -89,20 +89,15 @@ begin
 		end if;
 	end process;
 	
-	process(clk)
-	begin
-		if rising_edge(clk) then
-			w1 	<= resize(signed(xin_reg), C_MAC_WIDTH);
-			w2 	<= sla_manual(w1, 1, C_MAC_WIDTH);
-			w16 <= sla_manual(w1, 4, C_MAC_WIDTH);
-			w15	<= w16 - 1;
-			w8 	<= sla_manual(w1, 3, C_MAC_WIDTH);
-			w8_n <= not w8 + 1;
-			w23 <= w15 + w8;
-			w1_n <= not w1 + 1;
-			w46 <= sla_manual(w23, 1, C_MAC_WIDTH);
-		end if;
-	end process;
+	w1 	<= resize(signed(xin_reg), C_MAC_WIDTH);
+	w2 	<= sla_manual(w1, 1, C_MAC_WIDTH);
+	w16 <= sla_manual(w1, 4, C_MAC_WIDTH);
+	w15	<= w16 - 1;
+	w8 	<= sla_manual(w1, 3, C_MAC_WIDTH);
+	w8_n <= not w8 + 1;
+	w23 <= w15 + w8;
+	w1_n <= not w1 + 1;
+	w46 <= sla_manual(w23, 1, C_MAC_WIDTH);
 	
 	mul_out(10) <= std_logic_vector(w1_n);
 	mul_out(9) 	<= (others => '0');
@@ -114,9 +109,7 @@ begin
 	mul_out(3) 	<= std_logic_vector(w8_n);
 	mul_out(2) 	<= std_logic_vector(w2);
 	mul_out(1) 	<= (others => '0');
-	mul_out(0) 	<= std_logic_vector(w1_n);
-	
-	
+	mul_out(0) 	<= std_logic_vector(w1_n);	
 	
 	process(clk)
 	begin

@@ -38,6 +38,8 @@ architecture behavioral of fir_phase1_RAG is
 	
 	signal xin_reg : std_logic_vector(C_INPUT_WIDTH-1 downto 0);
 	
+	signal acc : std_logic_vector(C_MAC_WIDTH-1 downto 0);
+	
 	-- Arithmetic shift left for signed std_logic_vector with sign extension
 	function sla_manual(
 		 x   : signed;
@@ -74,6 +76,17 @@ begin
 		-- end if;
 	-- end process;
 	
+	process(clk)
+	begin
+		if rising_edge(clk) then
+			if rst = '1' then
+				xin_reg <= (others => '0');
+			elsif xin_en = '1' then
+				xin_reg <= xin;
+			end if;
+		end if;
+	end process;
+	
 	w1 		<= resize(signed(xin_reg), C_MAC_WIDTH);
 	w1_n 	<= not w1 + 1;
 	w4 		<= sla_manual(w1, 2, C_MAC_WIDTH);
@@ -103,24 +116,52 @@ begin
 		-- end if;
 	-- end process reg_mul;
 	
-	mul_out(10) <= std_logic_vector(w1_n);
-	mul_out(9) 	<= std_logic_vector(w3);
-	mul_out(8) 	<= std_logic_vector(w3_n);
-	mul_out(7) 	<= std_logic_vector(w3_n);
-	mul_out(6) 	<= std_logic_vector(w36);
-	mul_out(5) 	<= std_logic_vector(w36);
-	mul_out(4) 	<= std_logic_vector(w3_n);
-	mul_out(3) 	<= std_logic_vector(w3_n);
-	mul_out(2) 	<= std_logic_vector(w3);
-	mul_out(1) 	<= std_logic_vector(w1_n);	
-	mul_out(0) 	<= (others => '0');
-	
-	add_out(0) <= mul_out(0);
-	
-	gen_add : for i in 1 to C_NUM_TAMPS-1 generate
+	process(clk)
 	begin
-		add_out(i)	<= shift_reg(i-1) + mul_out(i);
-	end generate gen_add;
+		if rising_edge(clk) then
+			mul_out(10) <= std_logic_vector(w1_n);
+		mul_out(9) 	<= std_logic_vector(w3);
+		mul_out(8) 	<= std_logic_vector(w3_n);
+		mul_out(7) 	<= std_logic_vector(w3_n);
+		mul_out(6) 	<= std_logic_vector(w36);
+		mul_out(5) 	<= std_logic_vector(w36);
+		mul_out(4) 	<= std_logic_vector(w3_n);
+		mul_out(3) 	<= std_logic_vector(w3_n);
+		mul_out(2) 	<= std_logic_vector(w3);
+		mul_out(1) 	<= std_logic_vector(w1_n);	
+		mul_out(0) 	<= (others => '0');
+		end if;
+	end process;
+	
+	process(clk)
+	begin
+		if rising_edge(clk) then
+			if rst = '1' then
+				shift_reg <= (others => (others => '0'));
+			else
+				for i in 0 to C_NUM_TAMPS-3 loop
+					shift_reg(i) <= shift_reg(i+1) + mul_out(i+1);
+				end loop;
+				shift_reg(C_NUM_TAMPS-2) <= mul_out(C_NUM_TAMPS-1);
+			end if;
+		end if;
+	end process;
+	
+	acc <= shift_reg(0) + mul_out(0);
+	
+	process(clk)
+	begin
+		if rising_edge(clk) then
+			xout <= acc;
+		end if;
+	end process;
+	
+	-- add_out(0) <= mul_out(0);
+	
+	-- gen_add : for i in 1 to C_NUM_TAMPS-1 generate
+	-- begin
+		-- add_out(i)	<= shift_reg(i-1) + mul_out(i);
+	-- end generate gen_add;
 	
 	-- add_reg : process(clk)
 	-- begin
@@ -129,31 +170,31 @@ begin
 		-- end if;
 	-- end process add_reg;
 	
-	shift_reg_process : process(clk)
-	begin
-		if rising_edge(clk) then
-			if rst = '1' then
-				shift_reg <= (others => (others => '0'));
-			elsif xin_en = '1' then
-				for i in 0 to C_NUM_TAMPS-2 loop
-					shift_reg(i) <= add_out(i);
-				end loop;
-				-- shift_reg(0) <= add_out(0);
-			end if;
-		end if;
-	end process shift_reg_process;
+	-- shift_reg_process : process(clk)
+	-- begin
+		-- if rising_edge(clk) then
+			-- if rst = '1' then
+				-- shift_reg <= (others => (others => '0'));
+			-- elsif xin_en = '1' then
+				-- for i in 0 to C_NUM_TAMPS-2 loop
+					-- shift_reg(i) <= add_out(i);
+				-- end loop;
+				shift_reg(0) <= add_out(0);
+			-- end if;
+		-- end if;
+	-- end process shift_reg_process;
 	
-	reg : process(clk)
-	begin
-		if rising_edge(clk) then
-			if rst = '1' then
-				xin_reg <= (others => '0');
-				xout 	<= (others => '0');
-			elsif xin_en = '1' then
-				xin_reg <= xin;
-				xout 	<= add_out(C_NUM_TAMPS-1);
-			end if;
-		end if;
-	end process;
+	-- reg : process(clk)
+	-- begin
+		-- if rising_edge(clk) then
+			-- if rst = '1' then
+				-- xin_reg <= (others => '0');
+				-- xout 	<= (others => '0');
+			-- elsif xin_en = '1' then
+				-- xin_reg <= xin;
+				-- xout 	<= add_out(C_NUM_TAMPS-1);
+			-- end if;
+		-- end if;
+	-- end process;
 	
 end architecture;
