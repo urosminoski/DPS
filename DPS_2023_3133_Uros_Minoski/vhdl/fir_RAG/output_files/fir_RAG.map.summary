@@ -1,10 +1,10 @@
-Analysis & Synthesis Status : Successful - Wed Aug 06 20:07:15 2025
+Analysis & Synthesis Status : Successful - Wed Aug 06 20:16:08 2025
 Quartus Prime Version : 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 Revision Name : fir_RAG
 Top-level Entity Name : fir_phase1_RAG
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A
-Total registers : 228
+Total registers : 358
 Total pins : 27
 Total virtual pins : 0
 Total block memory bits : 0
