@@ -103,18 +103,18 @@ begin
 		-- end if;
 	-- end process reg_mul;
 	
-	mul_out(0) 	<= std_logic_vector(w1_n);
-	mul_out(1) 	<= std_logic_vector(w3);
-	mul_out(2) 	<= std_logic_vector(w3_n);
-	mul_out(3) 	<= std_logic_vector(w3_n);
-	mul_out(4) 	<= std_logic_vector(w36);
-	mul_out(5) 	<= std_logic_vector(w36);
-	mul_out(6) 	<= std_logic_vector(w3_n);
+	mul_out(10) <= std_logic_vector(w1_n);
+	mul_out(9) 	<= std_logic_vector(w3);
+	mul_out(8) 	<= std_logic_vector(w3_n);
 	mul_out(7) 	<= std_logic_vector(w3_n);
-	mul_out(8) 	<= std_logic_vector(w3);
-	mul_out(9) 	<= std_logic_vector(w1_n);
-			
-	mul_out(10) <= (others => '0');
+	mul_out(6) 	<= std_logic_vector(w36);
+	mul_out(5) 	<= std_logic_vector(w36);
+	mul_out(4) 	<= std_logic_vector(w3_n);
+	mul_out(3) 	<= std_logic_vector(w3_n);
+	mul_out(2) 	<= std_logic_vector(w3);
+	mul_out(1) 	<= std_logic_vector(w1_n);	
+	mul_out(0) 	<= (others => '0');
+	
 	add_out(0) <= mul_out(0);
 	
 	gen_add : for i in 1 to C_NUM_TAMPS-1 generate
