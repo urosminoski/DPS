@@ -22,11 +22,16 @@ architecture tb of tb_poly_dec_RAG is
 	signal xout_en	: std_logic := '0';
 	signal xin		: std_logic_vector(C_INPUT_WIDTH-1 downto 0) := (others =>'0');
 	signal xout		: std_logic_vector(C_OUTPUT_WIDTH-1 downto 0) := (others =>'0');
+	signal xout_0		: std_logic_vector(C_OUTPUT_WIDTH-1 downto 0) := (others =>'0');
+	signal xout_1		: std_logic_vector(C_OUTPUT_WIDTH-1 downto 0) := (others =>'0');
 	
 	signal out_ready : std_logic := '0';
 	
 	file input_file 	: text open read_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\poly_dec_RAG\data\xin_q1n.txt";
 	file output_file 	: text open write_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\poly_dec_RAG\data\xout_dec.txt";
+	
+	file output_file_0 	: text open write_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\poly_dec_RAG\data\xout_dec_0.txt";
+	file output_file_1 	: text open write_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\poly_dec_RAG\data\xout_dec_1.txt";
 	
 begin
 	
@@ -42,7 +47,9 @@ begin
 			xin_en	=> xin_en,
 			xout_en	=> xout_en,
 			xin		=> xin,
-			xout	=> xout
+			xout	=> xout,
+			xout_0	=> xout_0,
+			xout_1	=> xout_1
 		);
 		
 	clk <= not clk after C_CLK_PERIOD/2;
@@ -74,6 +81,12 @@ begin
 			if out_ready = '1' and xout_en = '1' then
 				write(output_line, to_integer(signed(xout)));
 				writeline(output_file, output_line);
+				
+				write(output_line, to_integer(signed(xout_0)));
+				writeline(output_file_0, output_line);
+				
+				write(output_line, to_integer(signed(xout_1)));
+				writeline(output_file_1, output_line);
 			end if;
 		end if;
 	end process write_file;

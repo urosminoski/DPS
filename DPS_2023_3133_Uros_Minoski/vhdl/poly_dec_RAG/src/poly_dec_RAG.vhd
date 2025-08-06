@@ -19,6 +19,8 @@ entity poly_dec_RAG is
         xin      : in  std_logic_vector(C_INPUT_WIDTH-1 downto 0);
         xin_en   : in  std_logic;
         xout     : out std_logic_vector(C_OUTPUT_WIDTH-1 downto 0);
+        xout_0     : out std_logic_vector(C_OUTPUT_WIDTH-1 downto 0);
+        xout_1     : out std_logic_vector(C_OUTPUT_WIDTH-1 downto 0);
         xout_en  : out std_logic
     );
 end entity;
@@ -56,12 +58,13 @@ begin
         end if;
     end process;
 	
-	process(clk)
-	begin
-		if rising_edge(clk) then
-			phase_cnt_d <= phase_cnt;
-		end if;
-	end process;
+	-- process(clk)
+	-- begin
+		-- if rising_edge(clk) then
+			-- phase_cnt_d <= phase_cnt;
+		-- end if;
+	-- end process;
+	phase_cnt_d <= phase_cnt;
 	
 	phase0_en <= '1' when (phase_cnt_d = 0 and xin_en = '1') else '0';
 	phase1_en <= '1' when (phase_cnt_d = 1 and xin_en = '1') else '0';
@@ -96,18 +99,21 @@ begin
 	
 	--
 	acumulator: process(clk, rst)
-		variable acc_v 		: std_logic_vector(MAC_W-1 downto 0) := (others => '0');
-		variable phase_v 	: std_logic_vector(MAC_W-1 downto 0) := (others => '0');
+		-- variable acc_v 		: std_logic_vector(MAC_W-1 downto 0) := (others => '0');
+		-- variable phase_v 	: std_logic_vector(MAC_W-1 downto 0) := (others => '0');
 	begin
 		if rst = '1' then
 			xout_en <= '0';
 			xout 	<= (others => '0');
-			acc_v 	:= (others => '0');
+			-- acc_v 	:= (others => '0');
 			
 		elsif rising_edge(clk) then
 			if phase_cnt_d = 1 then
-				acc_v 	:= xout_phase0 + xout_phase1;
-				xout 	<= acc_v(acc_V'length-1 downto acc_V'length-C_OUTPUT_WIDTH);
+				-- acc_v 	:= xout_phase0 + xout_phase1;
+				-- xout 	<= acc_v(acc_V'length-1 downto acc_V'length-C_OUTPUT_WIDTH);
+				xout <= xout_phase0 + xout_phase1;
+				xout_0 <= xout_phase0;
+				xout_1 <= xout_phase1;
 				xout_en <= '1';
 			else
 				xout_en <= '0';
