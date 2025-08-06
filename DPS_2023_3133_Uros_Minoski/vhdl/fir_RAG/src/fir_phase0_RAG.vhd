@@ -63,6 +63,7 @@ architecture behavioral of fir_phase0_RAG is
 
 		 return result;
 	end function;
+
 	
 begin
 
@@ -119,16 +120,13 @@ begin
 		-- mul_out(i) <= coeff(i) * xin_reg;
 	-- end generate;
 	
-	add_out(C_NUM_TAMPS-1) <= mul_out(C_NUM_TAMPS-1);
-	gen_add : for i in 0 to C_NUM_TAMPS-2 generate
-	begin
-		add_out(i) <= shift_reg(i) + mul_out(i);
-	end generate;
-	
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			add_out_reg <= add_out;
+			for i in 0 to C_NUM_TAMPS-2 loop
+				add_out(i) <= shift_reg(i) + mul_out(i);
+			end loop;
+			add_out(C_NUM_TAMPS-1) <= mul_out(C_NUM_TAMPS-1);
 		end if;
 	end process;
 	
@@ -139,9 +137,9 @@ begin
 				shift_reg <= (others => (others => '0'));
 			else
 				for i in 0 to C_NUM_TAMPS-3 loop
-					shift_reg(i) <= add_out_reg(i+1); --shift_reg(i+1) + mul_out(i+1);
+					shift_reg(i) <= add_out(i+1); --shift_reg(i+1) + mul_out(i+1);
 				end loop;
-				shift_reg(C_NUM_TAMPS-2) <= add_out_reg(C_NUM_TAMPS-1);
+				shift_reg(C_NUM_TAMPS-2) <= add_out(C_NUM_TAMPS-1);
 			end if;
 		end if;
 	end process;
