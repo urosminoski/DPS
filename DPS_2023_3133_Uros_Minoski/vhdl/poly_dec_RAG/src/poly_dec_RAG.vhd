@@ -58,13 +58,13 @@ begin
         end if;
     end process;
 	
-	-- process(clk)
-	-- begin
-		-- if rising_edge(clk) then
-			-- phase_cnt_d <= phase_cnt;
-		-- end if;
-	-- end process;
-	phase_cnt_d <= phase_cnt;
+	process(clk)
+	begin
+		if rising_edge(clk) then
+			phase_cnt_d <= phase_cnt;
+		end if;
+	end process;
+	-- phase_cnt_d <= phase_cnt;
 	
 	phase0_en <= '1' when (phase_cnt_d = 0 and xin_en = '1') else '0';
 	phase1_en <= '1' when (phase_cnt_d = 1 and xin_en = '1') else '0';
