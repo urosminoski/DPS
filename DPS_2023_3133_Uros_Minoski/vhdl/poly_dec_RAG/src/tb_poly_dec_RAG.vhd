@@ -4,10 +4,10 @@ use ieee.std_logic_signed.all;
 use ieee.numeric_std.all;
 use std.textio.all;
 
-entity tb_poly_decimation is
+entity tb_poly_dec_RAG is
 end entity;
 
-architecture tb of tb_poly_decimation is
+architecture tb of tb_poly_dec_RAG is
 
 	constant C_CLK_FREQ		: integer := 150_000_000;
 	constant C_CLK_PERIOD 	: time := 1 sec / C_CLK_FREQ;
@@ -24,17 +24,13 @@ architecture tb of tb_poly_decimation is
 	signal xout		: std_logic_vector(C_OUTPUT_WIDTH-1 downto 0) := (others =>'0');
 	
 	signal out_ready : std_logic := '0';
-	-- "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\moj_rad\fir_direct\data\xin.txt"
-	-- file input_file 	: text open read_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\fir_RAG\data\xin_q1n_phase1.txt";
-	-- file output_file 	: text open write_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\fir_RAG\data\xout_phase0.txt";
 	
-	file input_file 	: text open read_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\fir_RAG\data\xin_q1n_phase0.txt";
-	file output_file 	: text open write_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\fir_RAG\data\xout_phase1.txt";
+	file input_file 	: text open read_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\poly_dec_RAG\data\xin_q1n.txt";
+	file output_file 	: text open write_mode is "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\poly_dec_RAG\data\xout_dec.txt";
 	
 begin
-	xout_en <= '1';
 	
-	uut: entity work.fir_phase0_RAG
+	uut: entity work.poly_dec_RAG
 		generic map (
 			C_INPUT_WIDTH => C_INPUT_WIDTH, 
 			C_COEFF_WIDTH => C_COEFF_WIDTH, 
@@ -44,7 +40,7 @@ begin
 			clk		=> clk,
 			rst		=> rst,
 			xin_en	=> xin_en,
-			-- xout_en	=> xout_en,
+			xout_en	=> xout_en,
 			xin		=> xin,
 			xout	=> xout
 		);
