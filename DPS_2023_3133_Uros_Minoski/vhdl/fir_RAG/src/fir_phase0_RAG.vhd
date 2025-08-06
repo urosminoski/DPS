@@ -100,17 +100,19 @@ begin
 	
 	process(clk)
 	begin
-		mul_out(0) <= std_logic_vector(w1_n);
-		mul_out(1) 	<= (others => '0');
-		mul_out(2) 	<= std_logic_vector(w2);
-		mul_out(3) 	<= std_logic_vector(w8_n);
-		mul_out(4) 	<= std_logic_vector(w15);
-		mul_out(5) 	<= std_logic_vector(w46);
-		mul_out(6) 	<= std_logic_vector(w15);
-		mul_out(7) 	<= std_logic_vector(w8_n);
-		mul_out(8) 	<= std_logic_vector(w2);
-		mul_out(9) 	<= (others => '0');
-		mul_out(10) <= std_logic_vector(w1_n);
+		if rising_edge(clk) then
+			mul_out(0) 	<= std_logic_vector(w1_n);
+			mul_out(1) 	<= (others => '0');
+			mul_out(2) 	<= std_logic_vector(w2);
+			mul_out(3) 	<= std_logic_vector(w8_n);
+			mul_out(4) 	<= std_logic_vector(w15);
+			mul_out(5) 	<= std_logic_vector(w46);
+			mul_out(6) 	<= std_logic_vector(w15);
+			mul_out(7) 	<= std_logic_vector(w8_n);
+			mul_out(8) 	<= std_logic_vector(w2);
+			mul_out(9) 	<= (others => '0');
+			mul_out(10) <= std_logic_vector(w1_n);
+		end if;
 	end process;
 	
 	-- gen_mul : for i in 0 to C_NUM_TAMPS-1 generate
