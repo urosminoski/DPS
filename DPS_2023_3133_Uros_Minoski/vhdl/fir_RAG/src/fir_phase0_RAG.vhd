@@ -30,7 +30,7 @@ architecture behavioral of fir_phase0_RAG is
 	signal w1, w1_n, w2, w8, w8_n, w15, w16, w23, w46 : signed(C_MAC_WIDTH-1 downto 0); 
 	signal w15_reg, w2_reg, w1_n_reg, w8_reg : signed(C_MAC_WIDTH-1 downto 0);
 								
-	type shift_reg_type is array (0 to C_NUM_TAMPS-1) of std_logic_vector(C_MAC_WIDTH-1 downto 0);
+	type shift_reg_type is array (0 to C_NUM_TAMPS-2) of std_logic_vector(C_MAC_WIDTH-1 downto 0);
 	signal shift_reg : shift_reg_type;
 	
 	type add_out_type is array (0 to C_NUM_TAMPS-1) of std_logic_vector(C_MAC_WIDTH-1 downto 0);
@@ -39,6 +39,7 @@ architecture behavioral of fir_phase0_RAG is
 	
 	signal xin_reg : std_logic_vector(C_INPUT_WIDTH-1 downto 0);
 	
+	-- Arithmetic shift left for signed std_logic_vector with sign extension
 	function sla_manual(
 		 x   : signed;
 		 sh  : natural;
@@ -65,67 +66,64 @@ architecture behavioral of fir_phase0_RAG is
 begin
 
 	-- MCM Generation
-	process(clk)
-	begin
-		if rising_edge(clk) then
-			w15		<= w16 - 1;
-			w8 		<= sla_manual(w1, 3, C_MAC_WIDTH);
-			w1_n 	<= not w1 + 1;
-			w2 		<= sla_manual(w1, 1, C_MAC_WIDTH);
-		end if;
-	end process;
+	-- process(clk)
+	-- begin
+		-- if rising_edge(clk) then
+			-- w15		<= w16 - 1;
+			-- w8 		<= sla_manual(w1, 3, C_MAC_WIDTH);
+			-- w1_n 	<= not w1 + 1;
+			-- w2 		<= sla_manual(w1, 1, C_MAC_WIDTH);
+		-- end if;
+	-- end process;
 	
 	w1 	<= resize(signed(xin_reg), C_MAC_WIDTH);
-	-- w2 	<= sla_manual(w1, 1, C_MAC_WIDTH);
+	w2 	<= sla_manual(w1, 1, C_MAC_WIDTH);
 	w16 <= sla_manual(w1, 4, C_MAC_WIDTH);
-	-- w15	<= w16 - 1;
-	-- w8 	<= sla_manual(w1, 3, C_MAC_WIDTH);
+	w15	<= w16 - 1;
+	w8 	<= sla_manual(w1, 3, C_MAC_WIDTH);
 	w8_n <= not w8 + 1;
 	w23 <= w15 + w8;
-	-- w1_n <= not w1 + 1;
-	w46 <= sla_manual(w23, 1, C_MAC_WIDTH);
+	w1_n <= not w1 + 1;
+	w46 <= sla_manual(w23, 1, C_MAC_WIDTH);	
 	
-	
-	
-	reg_mul : process(clk)
-	begin
-		if rising_edge(clk) then
+	-- reg_mul : process(clk)
+	-- begin
+		-- if rising_edge(clk) then
 			-- w15_reg	<= w15;
 			-- w8_reg <= w8;
 			-- w1_n_reg <= w1_n;
 			-- w2_reg 	<= w2;
 			
-			mul_out(0) <= std_logic_vector(w1_n);
-			-- mul_out(1) <= (others => '0');
-			mul_out(2) <= std_logic_vector(w2);
-			mul_out(3) <= std_logic_vector(w8_n);
-			mul_out(4) <= std_logic_vector(w15);
-			mul_out(5) <= std_logic_vector(w46);
-			mul_out(6) <= std_logic_vector(w15);
-			mul_out(7) <= std_logic_vector(w8_n);
-			mul_out(8) <= std_logic_vector(w2);
-			-- mul_out(9) <= (others => '0');
-			mul_out(10) <= std_logic_vector(w1_n);
-		end if;
-	end process reg_mul;
+			-- mul_out(0) <= std_logic_vector(w1_n);
+			-- mul_out(2) <= std_logic_vector(w2);
+			-- mul_out(3) <= std_logic_vector(w8_n);
+			-- mul_out(4) <= std_logic_vector(w15);
+			-- mul_out(5) <= std_logic_vector(w46);
+			-- mul_out(6) <= std_logic_vector(w15);
+			-- mul_out(7) <= std_logic_vector(w8_n);
+			-- mul_out(8) <= std_logic_vector(w2);
+			-- mul_out(10) <= std_logic_vector(w1_n);
+		-- end if;
+	-- end process reg_mul;
 	
-	-- mul_out(0) <= std_logic_vector(w1_n);
+	mul_out(0) <= std_logic_vector(w1_n);
+	mul_out(2) <= std_logic_vector(w2);
+	mul_out(3) <= std_logic_vector(w8_n);
+	mul_out(4) <= std_logic_vector(w15);
+	mul_out(5) <= std_logic_vector(w46);
+	mul_out(6) <= std_logic_vector(w15);
+	mul_out(7) <= std_logic_vector(w8_n);
+	mul_out(8) <= std_logic_vector(w2);
+	mul_out(10) <= std_logic_vector(w1_n);
+	
 	mul_out(1) <= (others => '0');
-	-- mul_out(2) <= std_logic_vector(w2);
-	-- mul_out(3) <= std_logic_vector(w8_n);
-	-- mul_out(4) <= std_logic_vector(w15);
-	-- mul_out(5) <= std_logic_vector(w46);
-	-- mul_out(6) <= std_logic_vector(w15);
-	-- mul_out(7) <= std_logic_vector(w8_n);
-	-- mul_out(8) <= std_logic_vector(w2);
 	mul_out(9) <= (others => '0');
-	-- mul_out(10) <= std_logic_vector(w1_n);
 	
 	add_out(0) <= mul_out(0);
 	
 	gen_add : for i in 1 to C_NUM_TAMPS-1 generate
 	begin
-		add_out(i) <= shift_reg(i) + mul_out(i);
+		add_out(i) <= shift_reg(i-1) + mul_out(i);
 	end generate gen_add;
 	
 	-- add_reg : process(clk)
@@ -141,10 +139,10 @@ begin
 			if rst = '1' then
 				shift_reg <= (others => (others => '0'));
 			elsif xin_en = '1' then
-				for i in 1 to C_NUM_TAMPS-1 loop
-					shift_reg(i) <= add_out(i-1);
+				for i in 0 to C_NUM_TAMPS-2 loop
+					shift_reg(i) <= add_out(i);
 				end loop;
-				shift_reg(0) <= add_out(0);
+				-- shift_reg(0) <= add_out(0);
 			end if;
 		end if;
 	end process shift_reg_process;
@@ -153,7 +151,8 @@ begin
 	begin
 		if rising_edge(clk) then
 			if rst = '1' then
-				xout <= (others => '0');
+				xin_reg <= (others => '0');
+				xout 	<= (others => '0');
 			elsif xin_en = '1' then
 				xin_reg <= xin;
 				xout 	<= add_out(C_NUM_TAMPS-1);
