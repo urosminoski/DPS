@@ -79,12 +79,14 @@ begin
 	begin
 		if falling_edge(clk) then
 			if out_ready = '1' and xout_en = '1' then
-				write(output_line, to_integer(signed(xout)));
-				writeline(output_file, output_line);
+				if xout_en = '1' then
+					write(output_line, to_integer(signed(xout)));
+					writeline(output_file, output_line);
+				end if;
 				
 				write(output_line, to_integer(signed(xout_0)));
 				writeline(output_file_0, output_line);
-				
+					
 				write(output_line, to_integer(signed(xout_1)));
 				writeline(output_file_1, output_line);
 			end if;

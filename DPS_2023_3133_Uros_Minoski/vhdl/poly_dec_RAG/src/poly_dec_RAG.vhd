@@ -108,11 +108,13 @@ begin
 	begin
 		if rising_edge(clk) then
 			if rst = '1' then
-				xout <= (others => '0');
+				xout 	<= (others => '0');
+				xout_en	<= '0';
 			else
 				if phase_cnt = 1 then
 					xout_1 	<= xout_phase1;
 					xout 	<= xout_phase0 + xout_phase1;
+					xout_en	<= '1';
 				else
 					xout_0 	<= xout_phase0;
 				end if;
