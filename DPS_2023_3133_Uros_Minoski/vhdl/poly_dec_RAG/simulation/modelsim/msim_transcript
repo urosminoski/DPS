@@ -1,0 +1,179 @@
+# Reading pref.tcl
+# do poly_dec_RAG_run_msim_gate_vhdl.do
+# if {[file exists gate_work]} {
+# 	vdel -lib gate_work -all
+# }
+# vlib gate_work
+# vmap work gate_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work gate_work 
+# Copying C:/intelFPGA_lite/20.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vcom -93 -work work {poly_dec_RAG.vho}
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 19:18:54 on Aug 13,2025
+# vcom -reportprogress 300 -93 -work work poly_dec_RAG.vho 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package VITAL_Timing
+# -- Loading package VITAL_Primitives
+# -- Loading package dffeas_pack
+# -- Loading package altera_primitives_components
+# -- Loading package altera_lnsim_components
+# -- Loading package cyclonev_atom_pack
+# -- Loading package cyclonev_components
+# -- Compiling entity poly_dec_RAG
+# -- Compiling architecture structure of poly_dec_RAG
+# End time: 19:18:55 on Aug 13,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# 
+vcom -reportprogress 300 -work work C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/fir_phase0_RAG.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 19:21:45 on Aug 13,2025
+# vcom -reportprogress 300 -work work C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/fir_phase0_RAG.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_SIGNED
+# -- Loading package NUMERIC_STD
+# -- Compiling entity fir_phase0_RAG
+# -- Compiling architecture behavioral of fir_phase0_RAG
+# End time: 19:21:45 on Aug 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/fir_phase1_RAG.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 19:21:45 on Aug 13,2025
+# vcom -reportprogress 300 -work work C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/fir_phase1_RAG.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_SIGNED
+# -- Loading package NUMERIC_STD
+# -- Compiling entity fir_phase1_RAG
+# -- Compiling architecture behavioral of fir_phase1_RAG
+# End time: 19:21:45 on Aug 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/poly_dec_RAG.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 19:21:45 on Aug 13,2025
+# vcom -reportprogress 300 -work work C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/poly_dec_RAG.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_SIGNED
+# -- Loading package NUMERIC_STD
+# -- Compiling entity poly_dec_RAG
+# -- Compiling architecture rtl of poly_dec_RAG
+# -- Loading entity fir_phase0_RAG
+# -- Loading entity fir_phase1_RAG
+# End time: 19:21:45 on Aug 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vcom -reportprogress 300 -work work C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 19:21:45 on Aug 13,2025
+# vcom -reportprogress 300 -work work C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_SIGNED
+# -- Loading package NUMERIC_STD
+# -- Compiling entity tb_poly_dec_RAG
+# -- Compiling architecture tb of tb_poly_dec_RAG
+# -- Loading entity poly_dec_RAG
+# End time: 19:21:45 on Aug 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vsim gate_work.tb_poly_dec_rag
+# vsim gate_work.tb_poly_dec_rag 
+# Start time: 19:21:53 on Aug 13,2025
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_signed(body)
+# Loading ieee.numeric_std(body)
+# Loading gate_work.tb_poly_dec_rag(tb)
+# ** Warning: (vsim-7) Failed to open VHDL file "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\poly_dec_RAG\data\mixChirp_q1n.txt" in rb mode.
+# No such file or directory. (errno = ENOENT)
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag File: C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd
+# Loading gate_work.poly_dec_rag(rtl)
+# Loading gate_work.fir_phase0_rag(behavioral)
+# Loading gate_work.fir_phase1_rag(behavioral)
+add wave -position end  sim:/tb_poly_dec_rag/clk
+add wave -position end  sim:/tb_poly_dec_rag/rst
+add wave -position end  sim:/tb_poly_dec_rag/xin_en
+add wave -position end  sim:/tb_poly_dec_rag/xout_en
+add wave -position end  sim:/tb_poly_dec_rag/xin
+add wave -position end  sim:/tb_poly_dec_rag/xout
+add wave -position end  sim:/tb_poly_dec_rag/xout_0
+add wave -position end  sim:/tb_poly_dec_rag/xout_1
+add wave -position end  sim:/tb_poly_dec_rag/out_ready
+run
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag/uut/phase1_gen
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag/uut/phase1_gen
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag/uut/phase0_gen
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag/uut/phase0_gen
+# ** Fatal: (vsim-7) Failed to open VHDL file "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\poly_dec_RAG\data\mixChirp_q1n.txt" in rb mode.
+# No such file or directory. (errno = ENOENT)
+#    Time: 503283 ps  Iteration: 0  Process: /tb_poly_dec_rag/read_file File: C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd
+# Fatal error in Process read_file at C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd line 68
+# 
+# HDL call sequence:
+# Stopped at C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd 68 Process read_file
+# 
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Warning: (vsim-7) Failed to open VHDL file "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\poly_dec_RAG\data\mixChirp_q1n.txt" in rb mode.
+# No such file or directory. (errno = ENOENT)
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag File: C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag/uut/phase1_gen
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag/uut/phase1_gen
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag/uut/phase0_gen
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag/uut/phase0_gen
+# ** Fatal: (vsim-7) Failed to open VHDL file "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\poly_dec_RAG\data\mixChirp_q1n.txt" in rb mode.
+# No such file or directory. (errno = ENOENT)
+#    Time: 503283 ps  Iteration: 0  Process: /tb_poly_dec_rag/read_file File: C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd
+# Fatal error in Process read_file at C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd line 68
+# 
+# HDL call sequence:
+# Stopped at C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd 68 Process read_file
+# 
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag/uut/phase1_gen
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag/uut/phase1_gen
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag/uut/phase0_gen
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /tb_poly_dec_rag/uut/phase0_gen
+# ** Fatal: (vsim-3551) TEXTIO : Read past end of file "C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\vhdl\poly_dec_RAG\data\mixChirp_q1n.txt".
+#    Time: 14155251 ps  Iteration: 0  Process: /tb_poly_dec_rag/read_file File: C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd
+# Fatal error in Process read_file at C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd line 68
+# 
+# HDL call sequence:
+# Stopped at C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd 68 Process read_file
+# 
+quit -sim

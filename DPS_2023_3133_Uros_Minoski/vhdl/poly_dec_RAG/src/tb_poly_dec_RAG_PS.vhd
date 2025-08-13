@@ -36,11 +36,11 @@ architecture tb of tb_poly_dec_RAG is
 begin
 	
 	uut: entity work.poly_dec_RAG
-		generic map (
-			C_INPUT_WIDTH => C_INPUT_WIDTH, 
-			C_COEFF_WIDTH => C_COEFF_WIDTH, 
-			C_OUTPUT_WIDTH => C_OUTPUT_WIDTH
-		)
+		-- generic map (
+			-- C_INPUT_WIDTH => C_INPUT_WIDTH, 
+			-- C_COEFF_WIDTH => C_COEFF_WIDTH, 
+			-- C_OUTPUT_WIDTH => C_OUTPUT_WIDTH
+		-- )
 		port map (
 			clk		=> clk,
 			rst		=> rst,
