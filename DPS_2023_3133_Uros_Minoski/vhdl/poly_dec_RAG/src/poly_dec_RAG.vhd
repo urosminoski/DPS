@@ -76,6 +76,9 @@ begin
 		end if;
 	end process;
 	
+	phase0_en <= '1' when (phase_cnt = 0 and xin_en = '1') else '0';
+	phase1_en <= '1' when (phase_cnt = 1 and xin_en = '1') else '0';
+	
 	phase0_gen : entity work.fir_phase0_RAG
 		generic map (
 			C_INPUT_WIDTH	=> C_INPUT_WIDTH,
@@ -85,7 +88,7 @@ begin
 		port map (
 			clk		=> clk,
 		    rst		=> rst,
-		    xin_en	=> '1',
+		    xin_en	=> phase0_en,
 		    xin		=> xin_phase0,
 		    xout	=> xout_phase0
 		);
@@ -99,8 +102,8 @@ begin
 		port map (
 			clk		=> clk,
 		    rst		=> rst,
-		    xin_en	=> '1',
-		    xin		=> xin_phase0,
+		    xin_en	=> phase1_en,
+		    xin		=> xin_phase1,
 		    xout	=> xout_phase1
 		);
 		

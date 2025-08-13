@@ -63,7 +63,6 @@ architecture behavioral of fir_phase1_RAG is
 
 		 return result;
 	end function;
-
 	
 begin
 
@@ -99,17 +98,21 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			mul_out(0) 	<= std_logic_vector(w1_n);
-			mul_out(1) 	<= std_logic_vector(w3);
-			mul_out(2) 	<= std_logic_vector(w3_n);
-			mul_out(3) 	<= std_logic_vector(w3_n);
-			mul_out(4) 	<= std_logic_vector(w36);
-			mul_out(5) 	<= std_logic_vector(w36);
-			mul_out(6) 	<= std_logic_vector(w3_n);
-			mul_out(7) 	<= std_logic_vector(w3_n);
-			mul_out(8) 	<= std_logic_vector(w3);
-			mul_out(9) 	<= std_logic_vector(w1_n);	
-			mul_out(10) <= (others => '0');
+			if rst = '1' then
+				mul_out <= (others => (others => '0'));
+			elsif xin_en = '1' then
+				mul_out(0) 	<= std_logic_vector(w1_n);
+				mul_out(1) 	<= std_logic_vector(w3);
+				mul_out(2) 	<= std_logic_vector(w3_n);
+				mul_out(3) 	<= std_logic_vector(w3_n);
+				mul_out(4) 	<= std_logic_vector(w36);
+				mul_out(5) 	<= std_logic_vector(w36);
+				mul_out(6) 	<= std_logic_vector(w3_n);
+				mul_out(7) 	<= std_logic_vector(w3_n);
+				mul_out(8) 	<= std_logic_vector(w3);
+				mul_out(9) 	<= std_logic_vector(w1_n);	
+				mul_out(10) <= (others => '0');
+			end if;
 		end if;
 	end process;
 	
@@ -129,10 +132,12 @@ begin
 			if rst = '1' then
 				shift_reg <= (others => (others => '0'));
 			else
-				for i in 0 to C_NUM_TAMPS-3 loop
-					shift_reg(i) <= shift_reg(i+1) + mul_out(i+1); --add_out(i+1); 
-				end loop;
-				shift_reg(C_NUM_TAMPS-2) <= mul_out(C_NUM_TAMPS-1); --add_out(C_NUM_TAMPS-1)
+				if xin_en = '1' then
+					for i in 0 to C_NUM_TAMPS-3 loop
+						shift_reg(i) <= shift_reg(i+1) + mul_out(i+1); --add_out(i+1); 
+					end loop;
+					shift_reg(C_NUM_TAMPS-2) <= mul_out(C_NUM_TAMPS-1); --add_out(C_NUM_TAMPS-1)
+				end if;
 			end if;
 		end if;
 	end process;
