@@ -68,9 +68,9 @@ begin
 				xin_phase1 <= (others => '0');
 			else
 				if phase_cnt = 0 then
-					xin_phase0 <= xin;
-				elsif phase_cnt = 1 then
 					xin_phase1 <= xin;
+				elsif phase_cnt = 1 then
+					xin_phase0 <= xin;
 				end if;
 			end if;
 		end if;
