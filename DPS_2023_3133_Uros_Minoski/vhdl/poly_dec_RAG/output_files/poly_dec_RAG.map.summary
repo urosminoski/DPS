@@ -1,11 +1,11 @@
-Analysis & Synthesis Status : Successful - Wed Aug 13 19:12:47 2025
+Analysis & Synthesis Status : Successful - Wed Aug 13 19:29:16 2025
 Quartus Prime Version : 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 Revision Name : poly_dec_RAG
 Top-level Entity Name : poly_dec_RAG
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A
-Total registers : 545
-Total pins : 60
+Total registers : 513
+Total pins : 28
 Total virtual pins : 0
 Total block memory bits : 0
 Total DSP Blocks : 0

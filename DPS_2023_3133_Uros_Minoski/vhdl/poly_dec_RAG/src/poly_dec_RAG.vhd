@@ -19,8 +19,6 @@ entity poly_dec_RAG is
         xin      	: in  std_logic_vector(C_INPUT_WIDTH-1 downto 0);
         xin_en   	: in  std_logic;
         xout     	: out std_logic_vector(C_OUTPUT_WIDTH-1 downto 0);
-        xout_0     	: out std_logic_vector(C_OUTPUT_WIDTH-1 downto 0);
-        xout_1     	: out std_logic_vector(C_OUTPUT_WIDTH-1 downto 0);
         xout_en  	: out std_logic
     );
 end entity;
@@ -63,21 +61,29 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
+			phase_cnt_d <= phase_cnt;
+		end if;
+	end process;
+	phase_cnt_d <= phase_cnt;
+	
+	process(clk)
+	begin
+		if rising_edge(clk) then
 			if rst = '1' then
 				xin_phase0 <= (others => '0');
 				xin_phase1 <= (others => '0');
 			else
-				if phase_cnt = 0 then
+				if phase_cnt_d = 0 then
 					xin_phase1 <= xin;
-				elsif phase_cnt = 1 then
+				elsif phase_cnt_d = 1 then
 					xin_phase0 <= xin;
 				end if;
 			end if;
 		end if;
 	end process;
 	
-	phase0_en <= '1' when (phase_cnt = 0 and xin_en = '1') else '0';
-	phase1_en <= '1' when (phase_cnt = 1 and xin_en = '1') else '0';
+	phase0_en <= '1' when (phase_cnt_d = 0 and xin_en = '1') else '0';
+	phase1_en <= '1' when (phase_cnt_d = 1 and xin_en = '1') else '0';
 	
 	phase0_gen : entity work.fir_phase0_RAG
 		generic map (
@@ -114,27 +120,16 @@ begin
 				xout 	<= (others => '0');
 				xout_en	<= '0';
 			else
-				if phase_cnt = 1 then
-					xout_1 	<= xout_phase1;
+				if phase_cnt_d = 1 then
 					xout 	<= xout_phase0 + xout_phase1;
 					xout_en	<= '1';
 				else
-					xout_0 	<= xout_phase0;
+					xout_en <= '0';
 				end if;
 			end if;
 		end if;
 	end process;
 	
-	
-	
-	
-	-- process(clk)
-	-- begin
-		-- if rising_edge(clk) then
-			-- phase_cnt_d <= phase_cnt;
-		-- end if;
-	-- end process;
-	-- phase_cnt_d <= phase_cnt;
 	
 	-- phase0_en <= '1' when (phase_cnt_d = 0 and xin_en = '1') else '0';
 	-- phase1_en <= '1' when (phase_cnt_d = 1 and xin_en = '1') else '0';
