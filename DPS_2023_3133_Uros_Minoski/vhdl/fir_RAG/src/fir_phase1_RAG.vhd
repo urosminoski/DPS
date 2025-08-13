@@ -142,7 +142,11 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			xout <= acc;
+			if rst = '1' then
+				xout <= (others => '0');
+			elsif xin_en = '1' then
+				xout <= acc;
+			end if;
 		end if;
 	end process;
 	

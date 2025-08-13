@@ -38,7 +38,7 @@ architecture behavioral of fir_phase0_RAG is
 	signal add_out_reg : add_out_type;
 	
 	signal acc : std_logic_vector(C_MAC_WIDTH-1 downto 0);
-	
+
 	signal xin_reg : std_logic_vector(C_INPUT_WIDTH-1 downto 0) := (others => '0');
 	
 	-- Arithmetic shift left for signed std_logic_vector with sign extension
@@ -144,7 +144,11 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			xout <= acc;
+			if rst = '1' then
+				xout <= (others => '0');
+			elsif xin_en = '1' then
+				xout <= acc;
+			end if;
 		end if;
 	end process;
 	

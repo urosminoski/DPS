@@ -120,16 +120,16 @@ begin
 	begin
 		if rising_edge(clk) then
 			mul_out(10) <= std_logic_vector(w1_n);
-		mul_out(9) 	<= std_logic_vector(w3);
-		mul_out(8) 	<= std_logic_vector(w3_n);
-		mul_out(7) 	<= std_logic_vector(w3_n);
-		mul_out(6) 	<= std_logic_vector(w36);
-		mul_out(5) 	<= std_logic_vector(w36);
-		mul_out(4) 	<= std_logic_vector(w3_n);
-		mul_out(3) 	<= std_logic_vector(w3_n);
-		mul_out(2) 	<= std_logic_vector(w3);
-		mul_out(1) 	<= std_logic_vector(w1_n);	
-		mul_out(0) 	<= (others => '0');
+			mul_out(9) 	<= std_logic_vector(w3);
+			mul_out(8) 	<= std_logic_vector(w3_n);
+			mul_out(7) 	<= std_logic_vector(w3_n);
+			mul_out(6) 	<= std_logic_vector(w36);
+			mul_out(5) 	<= std_logic_vector(w36);
+			mul_out(4) 	<= std_logic_vector(w3_n);
+			mul_out(3) 	<= std_logic_vector(w3_n);
+			mul_out(2) 	<= std_logic_vector(w3);
+			mul_out(1) 	<= std_logic_vector(w1_n);	
+			mul_out(0) 	<= (others => '0');
 		end if;
 	end process;
 	
