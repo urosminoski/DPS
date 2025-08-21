@@ -159,3 +159,169 @@ begin
 	end process;
 	
 end architecture;
+
+
+
+-- library ieee;
+-- use ieee.std_logic_1164.all;
+-- use ieee.numeric_std.all;
+
+-- ... entity isti ...
+
+-- architecture rtl of fir_phase0_RAG is
+  -- constant C_NUM_TAMPS  : integer := 11;
+  -- constant C_MAC_WIDTH  : integer := C_INPUT_WIDTH + C_COEFF_WIDTH;
+
+  -- subtype T is signed(C_MAC_WIDTH-1 downto 0);
+
+  -- S0: registrovani ulaz
+  -- signal w1_s0   : T;
+
+  -- S1: jeftini shiftovi/negacija
+  -- signal w1_s1   : T;
+  -- signal w2_s1   : T;
+  -- signal w8_s1   : T;
+  -- signal w16_s1  : T;
+  -- signal w1n_s1  : T;
+
+  -- S2: prva suma/razlika
+  -- signal w15_s2  : T;
+  -- signal w2_s2   : T;
+  -- signal w8_s2   : T;
+  -- signal w1n_s2  : T;
+
+  -- S3: druga suma
+  -- signal w23_s3  : T;
+  -- signal w2_s3   : T;
+  -- signal w8_s3   : T;   -- (korisno za -w8 kasnije)
+  -- signal w1n_s3  : T;
+
+  -- S4: završni shift i poravnanja za mul_out
+  -- signal w46_s4  : T;
+  -- signal w15_s4  : T;   -- poravnanje (2 takta od S2 do S4)
+  -- signal w8n_s4  : T;
+  -- signal w2_s4   : T;
+  -- signal w1n_s4  : T;
+
+  -- signal xin_reg : std_logic_vector(C_INPUT_WIDTH-1 downto 0);
+
+  -- type mul_out_type is array (0 to C_NUM_TAMPS-1) of std_logic_vector(C_MAC_WIDTH-1 downto 0);
+  -- signal mul_out : mul_out_type;
+
+-- begin
+  -------------------------------------------------------------------------
+  -- S0: ulazni registar
+  -------------------------------------------------------------------------
+  -- process(clk)
+  -- begin
+    -- if rising_edge(clk) then
+      -- if rst='1' then
+        -- xin_reg <= (others=>'0');
+      -- elsif xin_en='1' then
+        -- xin_reg <= xin;
+      -- end if;
+    -- end if;
+  -- end process;
+
+  -- w1_s0 <= resize(signed(xin_reg), C_MAC_WIDTH);
+
+  -------------------------------------------------------------------------
+  -- S1: jeftini shiftovi i negacija (sve registrovano)
+  -------------------------------------------------------------------------
+  -- process(clk)
+  -- begin
+    -- if rising_edge(clk) then
+      -- if rst='1' then
+        -- w1_s1  <= (others=>'0');
+        -- w2_s1  <= (others=>'0');
+        -- w8_s1  <= (others=>'0');
+        -- w16_s1 <= (others=>'0');
+        -- w1n_s1 <= (others=>'0');
+      -- elsif xin_en='1' then
+        -- w1_s1  <= w1_s0;
+        -- w2_s1  <= shift_left(w1_s0, 1);  -- w1<<1
+        -- w8_s1  <= shift_left(w1_s0, 3);  -- w1<<3
+        -- w16_s1 <= shift_left(w1_s0, 4);  -- w1<<4
+        -- w1n_s1 <= -w1_s0;                -- not w1 + 1
+      -- end if;
+    -- end if;
+  -- end process;
+
+  -------------------------------------------------------------------------
+  -- S2: prva suma/razlika (registrovano) + poravnanja
+  -------------------------------------------------------------------------
+  -- process(clk)
+  -- begin
+    -- if rising_edge(clk) then
+      -- if rst='1' then
+        -- w15_s2 <= (others=>'0');
+        -- w2_s2  <= (others=>'0');
+        -- w8_s2  <= (others=>'0');
+        -- w1n_s2 <= (others=>'0');
+      -- elsif xin_en='1' then
+        -- w15_s2 <= w16_s1 - w1_s1;  -- 16 - 1
+        -- w2_s2  <= w2_s1;
+        -- w8_s2  <= w8_s1;
+        -- w1n_s2 <= w1n_s1;
+      -- end if;
+    -- end if;
+  -- end process;
+
+  -------------------------------------------------------------------------
+  -- S3: druga suma (registrovano) + poravnanja
+  -------------------------------------------------------------------------
+  -- process(clk)
+  -- begin
+    -- if rising_edge(clk) then
+      -- if rst='1' then
+        -- w23_s3 <= (others=>'0');
+        -- w2_s3  <= (others=>'0');
+        -- w8_s3  <= (others=>'0');
+        -- w1n_s3 <= (others=>'0');
+      -- elsif xin_en='1' then
+        -- w23_s3 <= w15_s2 + w8_s2;  -- 15 + 8
+        -- w2_s3  <= w2_s2;
+        -- w8_s3  <= w8_s2;           -- čuvamo +w8 da lako napravimo -w8 u S4
+        -- w1n_s3 <= w1n_s2;
+      -- end if;
+    -- end if;
+  -- end process;
+
+  -------------------------------------------------------------------------
+  -- S4: završni shift i negacija (registrovano) + upis u mul_out
+  -------------------------------------------------------------------------
+  -- process(clk)
+  -- begin
+    -- if rising_edge(clk) then
+      -- if rst='1' then
+        -- w46_s4 <= (others=>'0');
+        -- w15_s4 <= (others=>'0');
+        -- w8n_s4 <= (others=>'0');
+        -- w2_s4  <= (others=>'0');
+        -- w1n_s4 <= (others=>'0');
+        -- mul_out <= (others=>(others=>'0'));
+      -- elsif xin_en='1' then
+        -- w46_s4 <= shift_left(w23_s3, 1); -- (15+8)<<1 = 46
+        -- w15_s4 <= w15_s2;                -- poravnanje (S2 -> S4)
+        -- w8n_s4 <= -w8_s3;                -- -(+8)
+        -- w2_s4  <= w2_s3;
+        -- w1n_s4 <= w1n_s3;
+
+        -- svi mul_out iz S4 registara (iste dužine putanje)
+        -- mul_out(0)  <= std_logic_vector(w1n_s4);
+        -- mul_out(1)  <= (others=>'0');
+        -- mul_out(2)  <= std_logic_vector(w2_s4);
+        -- mul_out(3)  <= std_logic_vector(w8n_s4);
+        -- mul_out(4)  <= std_logic_vector(w15_s4);
+        -- mul_out(5)  <= std_logic_vector(w46_s4);
+        -- mul_out(6)  <= std_logic_vector(w15_s4);
+        -- mul_out(7)  <= std_logic_vector(w8n_s4);
+        -- mul_out(8)  <= std_logic_vector(w2_s4);
+        -- mul_out(9)  <= (others=>'0');
+        -- mul_out(10) <= std_logic_vector(w1n_s4);
+      -- end if;
+    -- end if;
+  -- end process;
+
+  -- tvoj ostatak (shift_reg, acc, xout) ostaje, ali računaj da je latencija +4 takta
+-- end architecture;

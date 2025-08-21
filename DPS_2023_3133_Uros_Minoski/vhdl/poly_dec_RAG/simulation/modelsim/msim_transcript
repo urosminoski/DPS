@@ -176,3 +176,6 @@ run
 # HDL call sequence:
 # Stopped at C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/vhdl/poly_dec_RAG/src/tb_poly_dec_RAG_PS.vhd 64 Process read_file
 # 
+quit -sim
+# End time: 19:38:06 on Aug 13,2025, Elapsed time: 0:02:22
+# Errors: 1, Warnings: 1
