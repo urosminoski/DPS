@@ -38,17 +38,17 @@ void main() {
         num_values++;
     }
 	
-	/* ako je neparan broj, dopuni nulom (ako ima mesta) */
-	if (num_values % 2 != 0) {
-		h[num_values++] = 0;
-	}
+	// /* ako je neparan broj, dopuni nulom (ako ima mesta) */
+	// if (num_values % 2 != 0) {
+		// h[num_values++] = 0;
+	// }
 
-	/* zameni u parovima: a0<->a1, a2<->a3, ... */
-	for (i = 0; i + 1 < num_values; i += 2) {
-		Int16 t = h[i];
-		h[i] = h[i+1];
-		h[i+1] = t;
-	}
+	// /* zameni u parovima: a0<->a1, a2<->a3, ... */
+	// for (i = 0; i + 1 < num_values; i += 2) {
+		// Int16 t = h[i];
+		// h[i] = h[i+1];
+		// h[i+1] = t;
+	// }
 	
 	while (fscanf(xin_file, "%d", &temp[0]) == 1) {
 		// Read the remaining elements of the block
