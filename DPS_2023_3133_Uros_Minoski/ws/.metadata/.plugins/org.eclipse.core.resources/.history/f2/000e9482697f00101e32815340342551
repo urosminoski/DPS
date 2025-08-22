@@ -69,7 +69,7 @@ void main() {
 
 
 	// Open the file for reading input samples
-	xin_file = fopen("..\\data\\mixChirp_q1n.txt", "r");
+	xin_file = fopen("..\\data\\xin_q1n.txt", "r");
 	if (!xin_file) { perror("open xin_file"); exit(1); }
 
 	h_file = fopen("..\\data\\firCoeff_q1n.txt", "r");
