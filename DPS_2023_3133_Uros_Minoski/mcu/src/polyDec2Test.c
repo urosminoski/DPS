@@ -13,10 +13,8 @@ typedef struct { Int16 re, im; } complex;
 #define SCALE_FLAG 0
 #define FFT_PTS    1024   /* hwafft_1024pts */
 
-/* Ako polyDec2 decimuje: stavi NUM_DATA_OUTPUT; inače NUM_DATA. */
-#ifndef NOUT_PER_BLOCK
-#define NOUT_PER_BLOCK  NUM_DATA
-#endif
+/* decimacija /2 */
+#define DECIM_FACTOR     2
 
 #ifndef MIN
 #define MIN(a,b) ((a)<(b)?(a):(b))
@@ -45,9 +43,10 @@ int main(void)
     /* Deklaracije (C89) */
     FILE *xin_file, *h_file, *xout_file, *xoutFFT_file;
     Int16 xin[NUM_DATA];
-    Int16 xout[NOUT_PER_BLOCK];
+    /* po bloku izlazi upola kraće od ulaza */
+    Int16 xout[NUM_DATA / DECIM_FACTOR];
     Int16 i, index;
-    size_t nb, got, nout, t;
+    size_t nb, got, nout, t;   /* got = #ulaznih Int16 u bloku, nout = #izlaznih Int16 */
     int j;
 
     /* Otvori BIN fajlove */
@@ -72,35 +71,35 @@ int main(void)
             Uint16 u = (Uint16)hb[2*t] | ((Uint16)hb[2*t+1] << 8);
             h[t] = (Int16)u;
         }
-        /* ako je nb < 2*NUM_TAPS, ostatak h[] ostaje neinic., dopuni nulama: */
         for (; t < (size_t)NUM_TAPS; t++) h[t] = 0;
     }
 
-    /* ---- Glavna petlja: čitaj blokove iz BIN ulaza (8-bit), filtriraj, piši BIN ---- */
+    /* ---- Glavna petlja: čitaj blokove (8-bit), filtriraj, piši upola manje ---- */
     for (;;) {
         Uint8 xb[2*NUM_DATA];
         nb  = fread(xb, 1u, 2u*NUM_DATA, xin_file);  /* čitaj 8-bit bajtove */
-        got = nb / 2u;                                /* broj Int16 uzoraka u ovom bloku */
+        got = nb / 2u;                                /* #Int16 ulaza u bloku */
         if (got == 0) break;
 
+        /* složi LE bajtove u Int16 */
         for (t = 0; t < got; t++) {
-            Uint16 u = (Uint16)xb[2*t] | ((Uint16)xb[2*t+1] << 8); /* LE -> Int16 */
+            Uint16 u = (Uint16)xb[2*t] | ((Uint16)xb[2*t+1] << 8);
             xin[t] = (Int16)u;
         }
 
-        /* Filtriraj blok */
+        /* filtriraj blok (polyDec2 decimuje ×2) */
         polyDec2(xin, (Int16)got, h, NUM_TAPS, xout, w, &index);
 
-        /* Koliko izlaza pišemo iz ovog bloka */
-        nout = MIN((size_t)NOUT_PER_BLOCK, got); /* prilagodi ako decimuješ drugačije */
+        /* broj izlaza je upola manji */
+        nout = got / DECIM_FACTOR;             /* ako je got neparan, zadnji uzorak se ignoriše */
 
-        /* Upis BIN (svaki Int16 = 2 bajta) – koristi size=2 za 8-bit fajl */
+        /* upis BIN: svaki Int16 = 2 bajta */
         fwrite(xout, 2u, nout, xout_file);
 
-        if (got < (size_t)NUM_DATA) break; /* poslednji, nepotpuni blok */
+        if (got < (size_t)NUM_DATA) break;     /* poslednji, nepotpuni blok */
     }
 
-    /* ---- FFT nad poslednjim raspoloživim xout prozorom ---- */
+    /* ---- FFT nad poslednjim xout-om: uzmi FFT_PTS uzoraka, zero-pad ako treba ---- */
     for (i = 0; i < FFT_PTS; i++) {
         X[i].re = (i < (Int16)MIN((size_t)FFT_PTS, nout)) ? xout[i] : 0;
         X[i].im = 0;
@@ -108,7 +107,7 @@ int main(void)
     hwafft_br((Int32 *)X,   (Int32 *)temp, FFT_PTS);
     hwafft_1024pts((Int32 *)temp, (Int32 *)X, FFT_FLAG, SCALE_FLAG);
 
-    /* Upis FFT rezultata BIN: (re,im) kao par Int16 */
+    /* Upis FFT rezultata BIN: (re,im) parovi Int16 */
     for (j = 0; j < FFT_PTS; j++) {
         fwrite(&X[j].re, 2u, 1u, xoutFFT_file);
         fwrite(&X[j].im, 2u, 1u, xoutFFT_file);
