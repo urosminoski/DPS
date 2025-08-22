@@ -8,6 +8,9 @@
    <void method="add"> 
     <string>C:/Program Files (x86)/Texas Instruments/ccsv4/eclipse/..\dvt\RTA6\solutions\cce_rta6</string> 
    </void> 
+   <void method="add"> 
+    <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\1\fftMagnitude</string> 
+   </void> 
   </void> 
  </object> 
 </java> 
