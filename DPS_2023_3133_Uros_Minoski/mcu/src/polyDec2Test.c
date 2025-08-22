@@ -46,80 +46,40 @@ int main(void)
     /* po bloku izlazi upola kraće od ulaza */
     Int16 xout[NUM_DATA / DECIM_FACTOR];
     Int16 i, index, k;
-    size_t nb, got, t;   /* got = #ulaznih Int16 u bloku, nout = #izlaznih Int16 */
 
     /* Otvori BIN fajlove */
-    xin_file     = fopen("..\\data\\mixChirp_q1n.bin", "rb");
+    xin_file     = fopen("..\\data\\mixChirp_q1n.txt", "r");
     if (!xin_file) { perror("open xin_file"); return 1; }
-    h_file       = fopen("..\\data\\firCoeff_q1n.bin", "rb");
+    h_file       = fopen("..\\data\\firCoeff_q1n.txt", "r");
     if (!h_file)  { perror("open h_file");  return 1; }
-    xout_file    = fopen("..\\data\\xout_q1n.bin", "w");
+    xout_file    = fopen("..\\data\\xout_q1n.txt", "w");
     if (!xout_file) { perror("open xout_file"); return 1; }
-    xoutFFT_file = fopen("..\\data\\xout_fft.bin", "wb"); /* (re,im) kao parovi Int16 */
+    xoutFFT_file = fopen("..\\data\\xout_fft.txt", "w"); /* (re,im) kao parovi Int16 */
     if (!xoutFFT_file) { perror("open xoutFFT_file"); return 1; }
 
     /* Inicijalizuj stanje filtra */
     memset(w, 0, sizeof(w));
     index = 0;
 
-    /* ---- Učitaj FIR koeficijente: 2*NUM_TAPS bajtova, LE -> Int16 ---- */
-    {
-        Uint8 hb[2*NUM_TAPS];
-        nb = fread(hb, 1u, 2u*NUM_TAPS, h_file);
-        for (t = 0; t < nb/2u; t++) {
-            Uint16 u = (Uint16)hb[2*t] | ((Uint16)hb[2*t+1] << 8);
-            h[t] = (Int16)u;
-        }
-        for (; t < (size_t)NUM_TAPS; t++) h[t] = 0;
-    }
-
-    // /* ---- Glavna petlja: čitaj blokove (8-bit), filtriraj, piši upola manje ---- */
-    // for (;;) {
-        // Uint8 xb[2*NUM_DATA];
-        // nb  = fread(xb, 1u, 2u*NUM_DATA, xin_file);  /* čitaj 8-bit bajtove */
-        // got = nb / 2u;                                /* #Int16 ulaza u bloku */
-        // if (got == 0) break;
-
-        // /* složi LE bajtove u Int16 */
-        // for (t = 0; t < got; t++) {
-            // Uint16 u = (Uint16)xb[2*t] | ((Uint16)xb[2*t+1] << 8);
-            // xin[t] = (Int16)u;
-        // }
-
-        // /* filtriraj blok (polyDec2 decimuje ×2) */
-        // polyDec2(xin, (Int16)got, h, NUM_TAPS, xout, w, &index);
-
-        /* broj izlaza je upola manji */
-        // nout = got / DECIM_FACTOR;             /* ako je got neparan, zadnji uzorak se ignoriše */
-
-        /* upis BIN: svaki Int16 = 2 bajta */
-        // fwrite(xout, 2u, nout, xout_file);
-		
-		// for(i = 0; i < got/2; i++) {
-			// fprintf(xout_file, "%d\n", xout[i]);
-		// }
-
-        // if (got < (size_t)NUM_DATA) break;     /* poslednji, nepotpuni blok */
-    // }
+	for (i = 0; i < NUM_TAPS; i++){
+		k = fscanf(h_file, "%d", &h[i]);
+		if (k != 1) {
+			printf("%d", h[i]);
+		}
+	}
 	
-	// Begin filtering the data
-    while (fread(temp, sizeof(Int8), NUM_DATA*2, xin_file) == (NUM_DATA*2))
-    {
-        for (k=0, i=0; i<NUM_DATA; i++)
-        {
-            xin[i] = (temp[k]&0xFF)|(temp[k+1]<<8);
-            k += 2;
-        }
-        // Filter the data x and save output y
-        polyDec2(xin, NUM_DATA, h, NUM_TAPS, xout, w, &index);
-
-        for (k=0, i=0; i<NUM_DATA; i++)
-        {
-            temp[k++] = (xout[i]&0xFF);
-            temp[k++] = (xout[i]>>8)&0xFF;
-        }
-        fwrite(temp, sizeof(Int8), NUM_DATA*2, xout_file);
-    }
+	for (i = 0; i < NUM_TAPS; i++){
+		k = fscanf(xin_file, "%d", &xin[i]);
+		if (k != 1) {
+			printf("%d", xin[i]);
+		}
+	}
+	
+	polyDec2(xin, NUM_DATA, h, NUM_TAPS, xout, w, &index);
+	
+	for (i = 0; i < FFT_PTS; i++) {
+		fprintf(xout_file, "%d\n", xout[i]);
+	}
 
     /* ---- FFT nad poslednjim xout-om: uzmi FFT_PTS uzoraka, zero-pad ako treba ---- */
     for (i = 0; i < FFT_PTS; i++) {
@@ -134,6 +94,10 @@ int main(void)
         fprintf(xoutFFT_file, "%d %d\n", X[i].re, X[i].im);
     }
 
+	for (i = 0; i < FFT_PTS; i++) {
+        temp[i] = X[i].re;
+    }
+	
     fclose(xin_file);
     fclose(h_file);
     fclose(xout_file);
