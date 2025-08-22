@@ -1,145 +1,137 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>     /* memset */
 #include "tistdtypes.h"
 #include "polyDec2.h"
 
-struct cmpx						/* Q15 format */
-{
-	Int16 re;
-	Int16 im;
+/* ---------------- Tipovi / strukture ---------------- */
+struct cmpx {      /* Q15 format */
+    Int16 re;
+    Int16 im;
 };
 typedef struct cmpx complex;
 
-struct element_pair						/* Q15 format */
-{
-	Int16 value;
-	Int16 position;
-};
-typedef struct element_pair pair;
+/* ---------------- HWA FFT define-ovi ---------------- */
+#define FFT_FLAG        0
+#define IFFT_FLAG       1
+#define SCALE_FLAG      0
+#define NOSCALE_FLAG    1
 
-#define FFT_FLAG        0		/* HWA to perform FFT */
-#define IFFT_FLAG       1		/* HWA to perform IFFT */
-#define SCALE_FLAG      0		/* HWA to scale butterfly output */
-#define NOSCALE_FLAG    1		/* HWA not to scale butterfly output */
+#define FFT_PTS         1024   /* jer koristimo hwafft_1024pts */
 
-#define	FFT_PTS 512			/* This is for 128 FFT case */
-#define F1 60000
-#define F0 20000
-#define T 0.01
-#define BETA (F1-F0)/T
-#define C 1500
-#define FS 200000
+/* Ako je tvoj polyDec2 decimator, postavi ovo na NUM_DATA_OUTPUT.
+   Ako nije, neka bude NUM_DATA. */
+#ifndef NOUT_PER_BLOCK
+#define NOUT_PER_BLOCK  NUM_DATA
+#endif
 
+#ifndef MIN
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
+#endif
+
+/* ---------------- HWA FFT prototipovi ---------------- */
+extern Uint16 hwafft_1024pts(Int32 *, Int32 *, Int16, Int16);
+extern Uint16 hwafft_br     (Int32 *, Int32 *, Int16);
+
+/* ---------------- DSP sekcije/poravnanja ---------------- */
 #pragma DATA_SECTION(X, "data_br_buf");
-#pragma DATA_ALIGN(X, 2*FFT_PTS);	/* Align for hwafft_br() */
-complex X[FFT_PTS];
+#pragma DATA_ALIGN(X, 2*FFT_PTS)
+static complex X[FFT_PTS];
 
 #pragma DATA_SECTION(temp, "scratch_buf");
-#pragma DATA_ALIGN(temp, 2*FFT_PTS); /* Align for hwafft_br() */
-complex temp[FFT_PTS];
+#pragma DATA_ALIGN(temp, 2*FFT_PTS)
+static complex temp[FFT_PTS];   /* scratch za bit-reversal */
 
-#pragma DATA_SECTION(output, ".data:output");
-Int16 output[FFT_PTS];		/* FFT - IFFT final output */
+#pragma DATA_SECTION(output, ".data:output")
+static Int16 output[FFT_PTS];
 
-
-// #pragma DATA_SECTION(input_data, ".const:input_data");
-//#include "input_data.dat"			/* Integer FFT test data file, sweep frequency */
-
-
-extern   Uint16 hwafft_512pts(Int32 *, Int32 *, Int16, Int16);
-extern   Uint16 hwafft_br(Int32 *, Int32 *, Int16);
-
-
-/* Define DSP system memory map */
+/* FIR koef./stanje */
 #pragma DATA_SECTION(h, ".const:fir");
 #pragma DATA_SECTION(w, ".bss:fir");
+static Int16 w[NUM_TAPS];
+static Int16 h[NUM_TAPS];
 
-// #define blkSizeMax 	80
-
-Int16 w[NUM_TAPS];
-Int16 h[NUM_TAPS];
-void main() {
-    // Open the file for writing in binary mode
+int main(void)
+{
+    /* --- deklaracije na vrhu (C89) --- */
     FILE *xin_file, *h_file, *xout_file, *xoutFFT_file;
-    Int16 xin[NUM_DATA],  	// Input data
-		  xout[NUM_DATA];  	// Output data
+    Int16 xin[NUM_DATA];       /* ulaz u polyDec2 (Int16 binarno) */
+    Int16 xout[NOUT_PER_BLOCK];/* izlaz iz polyDec2 po bloku      */
     Int16 num_values, i, index;
-	Int16 temp[NUM_DATA];
-	// Int16 blkSize;
+    size_t got, ncoefs, nout;
+    int j;
 
+    /* --- otvaranje BINARNIH fajlova --- */
+    xin_file    = fopen("..\\data\\mixChirp_q1n.bin", "rb");
+    if (!xin_file) { perror("open xin_file"); return 1; }
 
-	// Open the file for reading input samples
-	xin_file = fopen("..\\data\\mixChirp_q1n.txt", "r");
-	if (!xin_file) { perror("open xin_file"); exit(1); }
+    h_file      = fopen("..\\data\\firCoeff_q1n.bin", "rb");
+    if (!h_file) { perror("open h_file"); return 1; }
 
-	h_file = fopen("..\\data\\firCoeff_q1n.txt", "r");
-	if (!h_file) { perror("open h_file"); exit(1); }
+    xout_file   = fopen("..\\data\\xout_q1n.bin", "wb");
+    if (!xout_file) { perror("open xout_file"); return 1; }
 
-	xout_file = fopen("..\\data\\xout_q1n.txt", "w");
-	if (!xout_file) { perror("open xout_file"); exit(1); }
-	
-	xoutFFT_file = fopen("..\\data\\xout_fft.txt", "w");
-	if (!xoutFFT_file) { perror("open xoutFFT_file"); exit(1); }
+    /* FFT izlaz (kompleksni Int16 parovi re,im). Ako želiš TXT, vidi komentar ispod. */
+    xoutFFT_file = fopen("..\\data\\xout_fft.bin", "wb");
+    if (!xoutFFT_file) { perror("open xoutFFT_file"); return 1; }
 
+    /* --- inicijalizacija stanja filtra --- */
+    memset(w, 0, sizeof(w));
+    index = 0;
 
-	num_values = 0;
-	while (num_values < NUM_TAPS && fscanf(h_file, "%d", &h[num_values]) == 1) {
-        num_values++;
+    /* --- učitaj FIR koeficijente binarno (NUM_TAPS × Int16) --- */
+    ncoefs = fread(h, sizeof(Int16), NUM_TAPS, h_file);
+    if (ncoefs < (size_t)NUM_TAPS) {
+        fprintf(stderr, "Warning: read only %lu/%d FIR coefficients\n",
+                (unsigned long)ncoefs, NUM_TAPS);
     }
-	
-	// /* ako je neparan broj, dopuni nulom (ako ima mesta) */
-	// if (num_values % 2 != 0) {
-		// h[num_values++] = 0;
-	// }
 
-	// /* zameni u parovima: a0<->a1, a2<->a3, ... */
-	// for (i = 0; i + 1 < num_values; i += 2) {
-		// Int16 t = h[i];
-		// h[i] = h[i+1];
-		// h[i+1] = t;
-	// }
-	
-	while (fscanf(xin_file, "%d", &temp[0]) == 1) {
-		// Read the remaining elements of the block
-		for (i = 1; i < NUM_DATA; i++) {
-		    if (fscanf(xin_file, "%d", &temp[i]) != 1) {
-				perror("Error reading input file");
-		        exit(0);
-		    }
-		}
-		
-		// Process the data in blocks of NUM_DATA
-		for (i = 0; i < NUM_DATA; i++) {
-		    xin[i] = temp[i];
-		}
-		
-		polyDec2(xin, NUM_DATA, h, NUM_TAPS, xout, w, &index);
-		
-		for (i=0; i<NUM_DATA_OUTPUT; i++) {
-			fprintf(xout_file, "%d\n", xout[i]);
-		}
-		break;    
-	}
-	
+    /* --- glavna petlja: čitaj blokove binarno → filtriraj → piši binarno --- */
+    for (;;) {
+        got = fread(xin, sizeof(Int16), NUM_DATA, xin_file);
+        if (got == 0) break;                 /* pravi EOF */
 
-	fclose(xin_file);
-	fclose(h_file);
-	fclose(xout_file);
-	
-	for (i=0; i<FFT_PTS; i++)
-    {
-        X[i].re = xout[i];
+        /* Ako imaš decimaciju, setuj nout = NUM_DATA_OUTPUT po bloku.
+           Ako nemaš, pretpostavi nout = got. */
+        nout = MIN((size_t)NOUT_PER_BLOCK, got);
+
+        polyDec2(xin, (Int16)got, h, NUM_TAPS, xout, w, &index);
+
+        /* Upis binarno: nout × Int16 */
+        fwrite(xout, sizeof(Int16), nout, xout_file);
+
+        if (got < (size_t)NUM_DATA) break;   /* poslednji, nepotpuni blok */
+    }
+
+    /* ------------- FFT deo (primer nad poslednjim blokom) ------------- */
+    /* Uzmi prozor FFT_PTS uzoraka iz xout (ili iz većeg akumulisanog bafera, po potrebi) */
+    for (i = 0; i < FFT_PTS; i++) {
+        X[i].re = (i < (Int16)MIN((size_t)FFT_PTS, nout)) ? xout[i] : 0;
         X[i].im = 0;
-	}
+    }
 
-    /* Start FFT */
-    hwafft_br((Int32 *)X, (Int32 *)temp, FFT_PTS); /* Arrange X[] in bit reversal order and store in temp */
-    hwafft_512pts((Int32 *)temp, (Int32 *)X, FFT_FLAG, SCALE_FLAG);
-	
-	for (i=0; i<NUM_DATA_OUTPUT; i++) {
-		fprintf(xoutFFT_file, "%d %d\n", X[i].re, X[i].im);
-	}
-	
+    /* Bit-reversal u poravnat scratch 'temp', pa 1024-pts FFT u 'X' */
+    hwafft_br((Int32 *)X, (Int32 *)temp, FFT_PTS);
+    hwafft_1024pts((Int32 *)temp, (Int32 *)X, FFT_FLAG, SCALE_FLAG);
+
+    /* Upis FFT rezultata binarno: za svaki bin 2 × Int16 (re, im) */
+    for (j = 0; j < FFT_PTS; j++) {
+        /* pišemo redom re, pa im kao Int16 */
+        fwrite(&X[j].re, sizeof(Int16), 1, xoutFFT_file);
+        fwrite(&X[j].im, sizeof(Int16), 1, xoutFFT_file);
+    }
+
+    /* Ako želiš FFT u tekst, umesto binarnog petlje iznad koristi:
+       for (j = 0; j < FFT_PTS; j++)
+           fprintf(xoutFFT_file, "%d %d\n", (int)X[j].re, (int)X[j].im);
+    */
+
+    /* --- zatvaranje --- */
+    fclose(xin_file);
+    fclose(h_file);
+    fclose(xout_file);
+    fclose(xoutFFT_file);
+
     printf("\nExp --- completed\n");
+    return 0;
 }
-
