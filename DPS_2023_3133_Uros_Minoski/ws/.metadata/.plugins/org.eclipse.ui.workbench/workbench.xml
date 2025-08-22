@@ -51,9 +51,6 @@
 </editor>
 </editors>
 <views>
-<view id="com.ti.ccstudio.debug.registers.ui.Expressions" partName="Watch (1)">
-<viewState StatesFile="C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/ws/.metadata/.plugins/com.ti.ccstudio.debug.registers.ui/expressions.xml" columnName.0="Name" columnName.1="Value" columnName.2="Address" columnName.3="Type" columnName.4="Format" columnWidth.0="150" columnWidth.1="150" columnWidth.2="150" columnWidth.3="150" columnWidth.4="80" numberOfVisibleColumns="5"/>
-</view>
 <view id="com.ti.dvt.ui.views.line:MagnitudeOnly" partName="magnitude -0">
 <viewState>
 <pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly"/>
@@ -63,12 +60,6 @@
 <viewState>
 <cheatSheetMemento id="com.ti.ccstudio.ui.cheatsheets.first.terminate"/>
 </viewState>
-</view>
-<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
-<viewState/>
-</view>
-<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
-<viewState/>
 </view>
 <view id="org.eclipse.cdt.ui.CView" partName="C/C++ Projects">
 <viewState horizontalPosition="0" verticalPosition="0">
@@ -94,15 +85,46 @@
 </customFilters>
 </viewState>
 </view>
-<view id="com.ti.ccstudio.system.setup.ui.views.TargetConfigurationView" partName="Target Configurations"/>
 <view id="org.eclipse.debug.ui.DebugView" partName="Debug">
 <viewState/>
+</view>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~3" partName="magnitude -4">
+<viewState>
+<pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~3"/>
+</viewState>
 </view>
 <view id="com.ti.ccstudio.debug.registers.ui.Variables" partName="Local (1)">
 <viewState columnName.0="Name" columnName.1="Value" columnName.2="Address" columnName.3="Type" columnName.4="Format" columnWidth.0="150" columnWidth.1="150" columnWidth.2="150" columnWidth.3="150" columnWidth.4="80" numberOfVisibleColumns="5"/>
 </view>
+<view id="com.ti.ccstudio.debug.registers.ui.Expressions" partName="Watch (1)">
+<viewState StatesFile="C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/ws/.metadata/.plugins/com.ti.ccstudio.debug.registers.ui/expressions.xml" columnName.0="Name" columnName.1="Value" columnName.2="Address" columnName.3="Type" columnName.4="Format" columnWidth.0="150" columnWidth.1="150" columnWidth.2="150" columnWidth.3="150" columnWidth.4="80" numberOfVisibleColumns="5"/>
+</view>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~1" partName="magnitude -2">
+<viewState>
+<pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~1"/>
+</viewState>
+</view>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
+</view>
+<view id="com.ti.ccstudio.system.setup.ui.views.TargetConfigurationView" partName="Target Configurations">
+<viewState/>
+</view>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~2" partName="magnitude -3">
+<viewState>
+<pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~2"/>
+</viewState>
+</view>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~0" partName="magnitude -1">
+<viewState>
+<pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~0"/>
+</viewState>
+</view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
-<viewState columnWidth0="256" columnWidth1="81" columnWidth2="156" columnWidth3="66" columnWidth4="0" horizontalPosition="0" verticalPosition="0">
+<viewState columnWidth0="259" columnWidth1="84" columnWidth2="159" columnWidth3="69" columnWidth4="0" horizontalPosition="0" verticalPosition="0">
 <columnOrder columnOrderIndex="0"/>
 <columnOrder columnOrderIndex="1"/>
 <columnOrder columnOrderIndex="2"/>
@@ -111,7 +133,7 @@
 </viewState>
 </view>
 </views>
-<perspectives activePart="com.ti.dvt.ui.views.line:MagnitudeOnly" activePerspective="org.eclipse.debug.ui.DebugPerspective">
+<perspectives activePart="org.eclipse.debug.ui.DebugView" activePerspective="org.eclipse.debug.ui.DebugPerspective">
 <perspective editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.cdt.internal.ui.CPerspectiveFactory" id="org.eclipse.cdt.ui.CPerspective" label="C/C++"/>
 <alwaysOnActionSet id="com.ti.ccstudio.debug.ui.licensing"/>
@@ -174,50 +196,33 @@
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="org.eclipse.ui.views.ProblemView"/>
 <view id="org.eclipse.ui.cheatsheets.views.CheatSheetView"/>
-<layout>
-<mainWindow>
-<info folder="true" part="topLeft">
-<folder activePageID="org.eclipse.cdt.ui.CView" appearance="2" expanded="2">
-<page content="org.eclipse.cdt.ui.CView" label="C/C++ Projects"/>
+<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="topLeft">&#x0A;<folder activePageID="org.eclipse.cdt.ui.CView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.cdt.ui.CView" label="C/C++ Projects"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="com.ti.ccstudio.system.setup.ui.views.TargetConfigurationView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@9f2588" ratio="0.749499" ratioLeft="748" ratioRight="250" relationship="2" relative="topLeft">
-<folder activePageID="org.eclipse.ui.cheatsheets.views.CheatSheetView" appearance="2" expanded="2">
-<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@9f2588" ratio="0.749499" ratioLeft="748" ratioRight="250" relationship="2" relative="topLeft">&#x0A;<folder activePageID="org.eclipse.ui.cheatsheets.views.CheatSheetView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="Cheat Sheets"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.249499" ratioLeft="249" ratioRight="749" relationship="2" relative="topLeft"/>
-<info folder="true" part="topRight" ratio="0.74899864" ratioLeft="561" ratioRight="188" relationship="2" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<info folder="true" part="topRight" ratio="0.74899864" ratioLeft="561" ratioRight="188" relationship="2" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@186793e" ratio="0.49178532" ratioLeft="449" ratioRight="464" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@186793e" ratio="0.49178532" ratioLeft="449" ratioRight="464" relationship="4" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@b0dffe" ratio="0.49910873" ratioLeft="280" ratioRight="281" relationship="2" relative="org.eclipse.ui.internal.ViewStack@186793e">
-<folder activePageID="org.eclipse.ui.views.ProblemView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@b0dffe" ratio="0.49910873" ratioLeft="280" ratioRight="281" relationship="2" relative="org.eclipse.ui.internal.ViewStack@186793e">&#x0A;<folder activePageID="org.eclipse.ui.views.ProblemView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
 </info>
@@ -288,7 +293,12 @@
 <view id="com.ti.ccstudio.debug.registers.ui.Expressions"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="com.ti.dvt.ui.views.line:MagnitudeOnly"/>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~0"/>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~1"/>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~2"/>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~3"/>
 <view id="org.eclipse.ui.cheatsheets.views.CheatSheetView"/>
+<view id="org.eclipse.ui.views.ProblemView"/>
 <fastViews>
 <view id="org.eclipse.cdt.ui.CView" ratio="0.3"/>
 <view id="com.ti.ccstudio.system.setup.ui.views.TargetConfigurationView" ratio="0.3"/>
@@ -305,17 +315,19 @@
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@162ca2b" ratio="0.7497382" ratioLeft="1432" ratioRight="478" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="org.eclipse.ui.cheatsheets.views.CheatSheetView" appearance="2" expanded="2">
+<folder activePageID="org.eclipse.ui.views.ProblemView" appearance="2" expanded="2">
 <page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="Cheat Sheets"/>
+<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
+<part id="1"/>
 </presentation>
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@c6e975" ratio="0.75" ratioLeft="687" ratioRight="229" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="com.ti.dvt.ui.views.line:MagnitudeOnly" appearance="2" expanded="2">
+<folder activePageID="com.ti.dvt.ui.views.line:MagnitudeOnly~3" appearance="2" expanded="2">
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
@@ -325,9 +337,17 @@
 <page content="com.ti.dvt.ui.views.line:Magnitude*" label="LabelNotFound"/>
 <page content="com.ti.dvt.ui.views.line:MagnitudeOnly*" label="LabelNotFound"/>
 <page content="com.ti.dvt.ui.views.line:MagnitudeOnly" label="magnitude -0"/>
+<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~0" label="magnitude -1"/>
+<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~1" label="magnitude -2"/>
+<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~2" label="magnitude -3"/>
+<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~3" label="magnitude -4"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
+<part id="2"/>
+<part id="3"/>
+<part id="4"/>
+<part id="5"/>
 </presentation>
 </folder>
 </info>
@@ -338,6 +358,7 @@
 <page content="com.ti.ccstudio.memory.ui.view.TIMemoryView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="com.ti.ccstudio.debug.ui.views.KernelObjects" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.5" ratioLeft="955" ratioRight="955" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
@@ -363,148 +384,157 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" path="/polyphaseDecimation/src/polyDec2.asm"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/polyphaseDecimation/src/polyphaseDecimationTest.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/polyphaseDecimation/src/polyDec2Test.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/polyphaseDecimation/inc/polyDec2.h"/>
 </editors>
-<item historyLabel="polyDec2.asm" index="0">
-<position/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1228" y="0"/>
 </item>
-<item historyLabel="polyphaseDecimationTest.c" index="1">
-<position/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1280" y="0"/>
 </item>
-<item historyLabel="polyDec2.asm" index="0">
-<position/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1298" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1314" y="0"/>
 </item>
-<item historyLabel="polyDec2.h" index="3">
-<position/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1194" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="496" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1228" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="1464" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1280" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="266" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1298" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="503" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1314" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="266" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1194" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="1707" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1228" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="266" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1447" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="1707" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1490" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="266" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1549" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="947" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1536" y="5"/>
 </item>
-<item historyLabel="polyDec2.h" index="3">
-<position info="not_deleted" x="26" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1588" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="266" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="275" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="947" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="724" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="965" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1177" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="1223" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1429" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="678" y="5"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="266" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="758" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="266" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="547" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="597" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="648" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="266" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="547" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="597" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="654" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="707" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="760" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="812" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="873" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="1044" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="2">
+<item historyLabel="polyDec2Test.c" index="0">
 <position info="not_deleted" x="1472" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="91" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1533" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="547" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1564" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="597" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1533" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="654" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1429" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="707" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1472" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="760" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1429" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="812" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1472" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="873" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1429" y="0"/>
 </item>
-<item active="true" historyLabel="polyDec2Test.c" index="2">
-<position info="not_deleted" x="1562" y="0"/>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1472" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1429" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1472" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1429" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1472" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1429" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1472" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1429" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1472" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1429" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1472" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1389" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="275" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="724" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="2236" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="275" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="724" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1439" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1482" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="1543" y="0"/>
+</item>
+<item active="true" historyLabel="polyDec2Test.c" index="0">
+<position info="not_deleted" x="2236" y="0"/>
 </item>
 </navigationHistory>
 <stickyState>

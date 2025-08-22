@@ -16,10 +16,10 @@
            <boolean>true</boolean> 
           </void> 
           <void property="recordsPerBlock"> 
-           <int>2048</int> 
+           <int>512</int> 
           </void> 
           <void property="size"> 
-           <int>2048</int> 
+           <int>512</int> 
           </void> 
          </object> 
         </void> 
@@ -35,19 +35,19 @@
        </object> 
       </void> 
       <void property="blockSize1"> 
-       <int>1024</int> 
+       <int>80</int> 
       </void> 
       <void property="blockSize2"> 
-       <int>1024</int> 
+       <int>80</int> 
       </void> 
       <void property="dspDataType"> 
        <string>16 bit signed integer</string> 
       </void> 
       <void property="fftFrameSize"> 
-       <int>4096</int> 
+       <int>1024</int> 
       </void> 
       <void property="fftOrder"> 
-       <int>12</int> 
+       <int>10</int> 
       </void> 
       <void property="name"> 
        <string>FFTCCSGraphDecoder</string> 
@@ -55,10 +55,10 @@
      </object> 
     </void> 
     <void property="blockSize1"> 
-     <int>1024</int> 
+     <int>80</int> 
     </void> 
     <void property="blockSize2"> 
-     <int>1024</int> 
+     <int>80</int> 
     </void> 
     <void property="dspDataType"> 
      <string>16 bit signed integer</string> 
