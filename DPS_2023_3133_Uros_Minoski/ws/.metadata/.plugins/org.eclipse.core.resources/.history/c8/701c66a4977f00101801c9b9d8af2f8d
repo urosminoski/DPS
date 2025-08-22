@@ -111,7 +111,7 @@ int main(void)
             k += 2;
         }
         // Filter the data x and save output y
-        polyDec2(xin, NUM_DATA, h, NUM_TAPS, xout, w, &index);
+        polyDec2(xin, NUM_DATA, blockFirCoef, NUM_TAPS, xout, w, &index);
 
         for (k=0, i=0; i<NUM_DATA; i++)
         {
