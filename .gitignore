@@ -17,7 +17,6 @@
 *.o
 *.elf
 *.hex
-*.bin
 *.exe
 *.obj
 *.out

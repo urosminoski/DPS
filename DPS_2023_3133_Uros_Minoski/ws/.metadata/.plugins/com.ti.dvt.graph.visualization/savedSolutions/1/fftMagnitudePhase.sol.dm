@@ -24,7 +24,7 @@
          </object> 
         </void> 
         <void property="graphType"> 
-         <string>FFT magnitude &amp; Phase</string> 
+         <string>FFT magnitude</string> 
         </void> 
         <void property="name"> 
          <string>GraphScaleDecoder</string> 
@@ -36,9 +36,6 @@
       </void> 
       <void property="blockSize2"> 
        <int>50</int> 
-      </void> 
-      <void property="graphType"> 
-       <string>FFT magnitude &amp; Phase</string> 
       </void> 
       <void property="name"> 
        <string>FFTCCSGraphDecoder</string> 
@@ -52,7 +49,7 @@
      <int>50</int> 
     </void> 
     <void property="graphType"> 
-     <string>FFT magnitude &amp; Phase</string> 
+     <string>FFT magnitude</string> 
     </void> 
     <void property="name"> 
      <string>CCSGraphsJtagDataSource</string> 
