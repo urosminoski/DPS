@@ -38,69 +38,51 @@ static complex temp[FFT_PTS];   /* scratch za bit-reversal */
 static Int16 w[NUM_TAPS];
 static Int16 h[NUM_TAPS];
 
-int main(void)
-{
-    /* Deklaracije (C89) */
-    FILE *xin_file, *h_file, *xout_file, *xoutFFT_file;
-    Int16 xin[NUM_DATA], temp[2*NUM_DATA];
-    /* po bloku izlazi upola kraće od ulaza */
-    Int16 xout[NUM_DATA / DECIM_FACTOR];
-    Int16 i, index, k;
-
-    /* Otvori BIN fajlove */
-    xin_file     = fopen("..\\data\\mixChirp_q1n.txt", "r");
-    if (!xin_file) { perror("open xin_file"); return 1; }
-    h_file       = fopen("..\\data\\firCoeff_q1n.txt", "r");
-    if (!h_file)  { perror("open h_file");  return 1; }
-    xout_file    = fopen("..\\data\\xout_q1n.txt", "w");
-    if (!xout_file) { perror("open xout_file"); return 1; }
-    xoutFFT_file = fopen("..\\data\\xout_fft.txt", "w"); /* (re,im) kao parovi Int16 */
-    if (!xoutFFT_file) { perror("open xoutFFT_file"); return 1; }
-
-    /* Inicijalizuj stanje filtra */
+int main(void) {
+    FILE  *fpIn,*fpOut;
+    Int16 i,k,c,
+		  index;        // Delay line index
+    Int16 x[NUM_DATA],  // Input data
+		  y[NUM_DATA];  // Output data
+    Int8  temp[NUM_DATA*2];
+    Uint8 waveHeader[44];
+	
+	fpIn = fopen("..\\data\\input.wav", "rb");
+    fpOut = fopen("..\\data\\output.wav", "wb");
+	if (!fpIn) { perror("Error opening: ..\\data\\input.pcm"); return 1; }
+	if (!fpOut) { perror("Error opening: ..\\data\\output.pcm"); return 1; }
+	
+	/* Read header */
+	fread(waveHeader, sizeof(Int8), 44, fpIn);
+    fwrite(waveHeader, sizeof(Int8), 44, fpOut);
+	
+	/* Inicijalizuj stanje filtra */
     memset(w, 0, sizeof(w));
     index = 0;
-
-	for (i = 0; i < NUM_TAPS; i++){
-		k = fscanf(h_file, "%d", &h[i]);
-		if (k != 1) {
-			printf("%d", h[i]);
-		}
-	}
 	
-	for (i = 0; i < NUM_TAPS; i++){
-		k = fscanf(xin_file, "%d", &xin[i]);
-		if (k != 1) {
-			printf("%d", xin[i]);
-		}
-	}
-	
-	polyDec2(xin, NUM_DATA, h, NUM_TAPS, xout, w, &index);
-	
-	for (i = 0; i < FFT_PTS; i++) {
-		fprintf(xout_file, "%d\n", xout[i]);
-	}
+	// Begin filtering the data
+    while (fread(temp, sizeof(Int8), NUM_DATA*2, fpIn) == (NUM_DATA*2))
+    {
+        for (k=0, i=0; i<NUM_DATA; i++)
+        {
+            x[i] = (temp[k]&0xFF)|(temp[k+1]<<8);
+            k += 2;
+        }
+        // Filter the data x and save output y
+        polyDec2(x, NUM_DATA, h, NUM_TAPS, y, w, &index);
 
-    /* ---- FFT nad poslednjim xout-om: uzmi FFT_PTS uzoraka, zero-pad ako treba ---- */
-    for (i = 0; i < FFT_PTS; i++) {
-        X[i].re = xout[i];
-        X[i].im = 0;
-    }
-    hwafft_br((Int32 *)X,   (Int32 *)temp, FFT_PTS);
-    hwafft_1024pts((Int32 *)temp, (Int32 *)X, FFT_FLAG, SCALE_FLAG);
-
-    /* Upis FFT rezultata BIN: (re,im) parovi Int16 */
-    for (i = 0; i < FFT_PTS; i++) {
-        fprintf(xoutFFT_file, "%d %d\n", X[i].re, X[i].im);
+        for (k=0, i=0; i<NUM_DATA; i++)
+        {
+            temp[k++] = (y[i]&0xFF);
+            temp[k++] = (y[i]>>8)&0xFF;
+        }
+        fwrite(temp, sizeof(Int8), NUM_DATA*2, fpOut);
     }
 
-	for (i = 0; i < FFT_PTS; i++) {
-        temp[i] = X[i].re;
-    }
-	
-    fclose(xin_file);
-    fclose(h_file);
-    fclose(xout_file);
-    fclose(xoutFFT_file);
+    fclose(fpIn);
+    fclose(fpOut);
+
+    printf("\nExp --- completed\n");
+   
     return 0;
 }

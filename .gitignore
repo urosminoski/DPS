@@ -13,7 +13,6 @@
 *.vcd
 *.sdf
 *.wlf
-*.wav
 *.o
 *.elf
 *.hex
