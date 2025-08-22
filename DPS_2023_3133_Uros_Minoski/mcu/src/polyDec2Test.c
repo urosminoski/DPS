@@ -53,7 +53,7 @@ int main(void)
     if (!xin_file) { perror("open xin_file"); return 1; }
     h_file       = fopen("..\\data\\firCoeff_q1n.bin", "rb");
     if (!h_file)  { perror("open h_file");  return 1; }
-    xout_file    = fopen("..\\data\\xout_q1n.txt", "w");
+    xout_file    = fopen("..\\data\\xout_q1n.bin", "w");
     if (!xout_file) { perror("open xout_file"); return 1; }
     xoutFFT_file = fopen("..\\data\\xout_fft.bin", "wb"); /* (re,im) kao parovi Int16 */
     if (!xoutFFT_file) { perror("open xoutFFT_file"); return 1; }
