@@ -11,7 +11,7 @@ typedef struct { Int16 re, im; } complex;
 #define FFT_FLAG   0
 #define IFFT_FLAG  1
 #define SCALE_FLAG 0
-#define FFT_PTS    1024   /* hwafft_1024pts */
+#define FFT_PTS    NUM_DATA_OUTPUT   /* hwafft_1024pts */
 
 /* decimacija /2 */
 #define DECIM_FACTOR     2
@@ -54,7 +54,7 @@ int main(void)
     if (!xin_file) { perror("open xin_file"); return 1; }
     h_file       = fopen("..\\data\\firCoeff_q1n.bin", "rb");
     if (!h_file)  { perror("open h_file");  return 1; }
-    xout_file    = fopen("..\\data\\xout_q1n.bin", "wb");
+    xout_file    = fopen("..\\data\\xout_q1n.txt", "w");
     if (!xout_file) { perror("open xout_file"); return 1; }
     xoutFFT_file = fopen("..\\data\\xout_fft.bin", "wb"); /* (re,im) kao parovi Int16 */
     if (!xoutFFT_file) { perror("open xoutFFT_file"); return 1; }
@@ -90,11 +90,15 @@ int main(void)
         /* filtriraj blok (polyDec2 decimuje ×2) */
         polyDec2(xin, (Int16)got, h, NUM_TAPS, xout, w, &index);
 
-        /* broj izlaza je upola manji */
-        nout = got / DECIM_FACTOR;             /* ako je got neparan, zadnji uzorak se ignoriše */
+        // /* broj izlaza je upola manji */
+        // nout = got / DECIM_FACTOR;             /* ako je got neparan, zadnji uzorak se ignoriše */
 
-        /* upis BIN: svaki Int16 = 2 bajta */
-        fwrite(xout, 2u, nout, xout_file);
+        // /* upis BIN: svaki Int16 = 2 bajta */
+        // fwrite(xout, 2u, nout, xout_file);
+		
+		for(i = 0; i < FFT_PTS; i++) {
+			fprintf(xout_file, "%d\n", xout[i]);
+		}
 
         if (got < (size_t)NUM_DATA) break;     /* poslednji, nepotpuni blok */
     }
