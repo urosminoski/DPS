@@ -1,8 +1,8 @@
 /*
  * c5505.cmd
  *
- *  Created on: Jul 20, 2012
- *      Author: BLEE, modified 
+ *  Created on: June 11, 2012
+ *      Author: BLEE, modified to add hardware FFT support
  *
  *  For the book "Real Time Digital Signal Processing:
  *                Fundamentals, Implementation and Application, 3rd Ed"
@@ -47,64 +47,116 @@
  *                                                                          
 */
 
-
 /******************************************************************************/
 /* C5505.cmd - COMMAND FILE FOR LINKING C PROGRAMS IN LARGE/HUGE MEMORY MODEL  */
 /******************************************************************************/
 
-/**********************************************************/
-/*                                                        */
-/*         LINKER command file for LEAD3 memory map       */
-/*                                                        */
-/**********************************************************/
+-stack    0x800      /* Primary stack size   */
+-sysstack 0x400      /* Secondary stack size */
+-heap     0x1000     /* Heap area size       */
 
+-c                    /* Use C linking conventions: auto-init vars at runtime */
+-u _Reset             /* Force load of reset interrupt handler                */
 
--stack 0x200
--heap 0x2000
--sysstack 0x100
- 
 MEMORY
 {
-    PAGE 0:
+    MMR     (RW)  : origin = 0000000h length = 0000c0h  /* MMRs */
+    DARAM_0 (RW)  : origin = 00000c0h length = 001f40h	/* on-chip DARAM 0 */
+    DARAM_1 (RW)  : origin = 0002000h length = 002000h	/* on-chip DARAM 1 */
+    DARAM_2 (RW)  : origin = 0004000h length = 002000h	/* on-chip DARAM 2 */
+    DARAM_3 (RW)  : origin = 0006000h length = 002000h	/* on-chip DARAM 3 */
+    DARAM_4 (RW)  : origin = 0008000h length = 002000h	/* on-chip DARAM 4 */
+    DARAM_5 (RW)  : origin = 000a000h length = 002000h	/* on-chip DARAM 5 */
+    DARAM_6 (RW)  : origin = 000c000h length = 002000h	/* on-chip DARAM 6 */
+    DARAM_7 (RW)  : origin = 000e000h length = 002000h	/* on-chip DARAM 7 */ 
 
-        MMR     : origin = 0000000h, length = 00000c0h 
-        DARAM0  : origin = 00002c0h, length = 0003d40h
-        DARAM1  : origin = 0004000h, length = 0002000h
-        DARAM2  : origin = 0006000h, length = 0002000h
-        DARAM3  : origin = 0008000h, length = 0008000h
+    SARAM   (RW) : origin = 0010000h length = 040000h	/* on-chip SARAM */
 
-        SARAM0  : origin = 0010000h, length = 0010000h
-        SARAM1  : origin = 0020000h, length = 0010000h
-        SARAM2  : origin = 0030000h, length = 0010000h
-        SARAM3  : origin = 0040000h, length = 0010000h
-      
-        CE01     : origin = 0100000h, length = 0020000h 
-        CE02	 : origin = 0120000h, length = 0020000h
-        CE03	 : origin = 0140000h, length = 0020000h
-        CE1     : origin = 0400000h, length = 0100000h
-        CE2     : origin = 0800000h, length = 0400000h
-        CE3     : origin = 0c00000h, length = 03f8000h
+    SAROM_0 (RX)  : origin = 0fe0000h length = 008000h 	/* on-chip ROM 0 */
+    SAROM_1 (RX)  : origin = 0fe8000h length = 008000h 	/* on-chip ROM 1 */
+    SAROM_2 (RX)  : origin = 0ff0000h length = 008000h 	/* on-chip ROM 2 */
+    SAROM_3 (RX)  : origin = 0ff8000h length = 007f00h 	/* on-chip ROM 3 */
+	VECS    (RX)  : origin = 0ffff00h length = 000100h	/* on-chip ROM vectors */
+    
+    EMIF_CS0 (RW) : origin = 0050000h  length = 07B0000h	/* mSDR */ 
+    EMIF_CS2 (RW) : origin = 0800000h  length = 0400000h	/* ASYNC1 : NAND */ 
+    EMIF_CS3 (RW) : origin = 0C00000h  length = 0200000h	/* ASYNC2 : NAND  */
+    EMIF_CS4 (RW) : origin = 0E00000h  length = 0100000h	/* ASYNC3 : NOR */
+    EMIF_CS5 (RW) : origin = 0F00000h  length = 00E0000h	/* ASYNC4 : SRAM */
+}
 
-        PDROM   : origin = 0ff8000h, length = 07f00h
-        VECS    : origin = 0c0h, length = 00200h  /* Reset vector */
-}	
 
- 
 SECTIONS
 {
-        vectors  (NOLOAD)                         /* Interrupt vector table, rts55x.lib */
-        vector   : {} > DARAM1 PAGE 0 align 256   /* Interrupt vector table, vector.asm */
-        .cinit   : {} > SARAM3 PAGE 0
-        .text    : {} > SARAM3 PAGE 0
-        .cio 	 : {} > SARAM3 PAGE 0 align 2
-        .switch	 : {} > SARAM3 PAGE 0 
-        .usect   : {} > SARAM3 PAGE 0 align 2
-           
-        .stack   : {} > DARAM0 PAGE 0
-        .sysstack: {} > DARAM0 PAGE 0
-        .sysmem  : {} > DARAM0 PAGE 0
-        .data    : {} > DARAM0 PAGE 0
-        .bss     : {} > DARAM3 PAGE 0
-        .const   : {} > SARAM3 PAGE 0 
-         
+    vectors (NOLOAD)
+    .bss        : > DARAM_0    /* fill = 0 */
+    vector      : > DARAM_0    ALIGN = 256 
+    .stack      : > DARAM_5  
+    .sysstack   : > DARAM_5  
+    .sysmem 	: > DARAM_5 
+    .text       : > SARAM   	ALIGN = 4  
+    .data       : > DARAM_2
+    .cinit 		: > SARAM
+    .const 		: > SARAM
+    .cio		: > SARAM
+    .usect   	: > SARAM
+    .switch     : > SARAM
+    .emif_cs0   : > EMIF_CS0
+    .emif_cs2   : > EMIF_CS2
+    .emif_cs3   : > EMIF_CS3
+    .emif_cs4   : > EMIF_CS4
+    .emif_cs5   : > EMIF_CS5
+	
+// The Bit-Reverse destination buffer data_br_buf requires an address with 
+// at least 4+log2(FFT_LENGTH) least significant binary zeros 
+
+    data_br_buf 	: > DARAM_1		
+    scratch_buf 	: > DARAM_1
+    convolved_buf	: > DARAM_2
+    coeffs_fft_buf	: > DARAM_2
+
+    RcvL1			: > DARAM_3	
+    RcvL2			: > DARAM_3	
+    RcvR1			: > DARAM_4	
+    RcvR2			: > DARAM_4	
+
+    FilterOut	    : > DARAM_5	
+    OverlapL	    : > DARAM_5	
+    OverlapR	    : > DARAM_5	
+
+    XmitL1			: > DARAM_6	
+    XmitL2			: > DARAM_6	
+    XmitR1			: > DARAM_7	
+    XmitR2			: > DARAM_7	
+
+    RcvL1_copy	    : > SARAM	
+    RcvL2_copy	    : > SARAM	
+    RcvR1_copy	    : > SARAM	
+    RcvR2_copy	    : > SARAM	
 }
+
+// To call the HWAFFT routines from ROM, uncomment the following lines then delete hwafft.asm from the CCS project (or exclude from build)
+// Only ROM Addresses for VC5505 (PG1.4) are provided.
+
+// VC5505 (PG1.4) HWAFFT Routines ROM Addresses:
+/*	_hwafft_br      = 0x00ff7342; */
+/*	_hwafft_8pts    = 0x00ff7356; */
+/*	_hwafft_16pts   = 0x00ff7445; */
+/*	_hwafft_32pts   = 0x00ff759b; */
+/*	_hwafft_64pts   = 0x00ff78a4; */
+/*	_hwafft_128pts  = 0x00ff7a39; */
+/*	_hwafft_256pts  = 0x00ff7c4a; */
+/*	_hwafft_512pts  = 0x00ff7e48; */
+/*	_hwafft_1024pts = 0x00ff80c2; */
+
+/* HWAFFT Routines ROM Addresses */
+/* C5505/C5515 (PG 2.0) */
+	_hwafft_br = 0x00ff6cd6;
+	_hwafft_8pts = 0x00ff6cea;
+	_hwafft_16pts = 0x00ff6dd9;
+	_hwafft_32pts = 0x00ff6f2f;
+	_hwafft_64pts = 0x00ff7238;
+	_hwafft_128pts = 0x00ff73cd;
+	_hwafft_256pts = 0x00ff75de;
+	_hwafft_512pts = 0x00ff77dc;
+	_hwafft_1024pts = 0x00ff7a56;
