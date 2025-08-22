@@ -38,6 +38,39 @@ void main() {
         num_values++;
     }
 	
+    // Initialize for filtering process
+    // for (i=0; i<NUM_TAPS; i++)
+    // {
+        // w[i] = 0;
+    // }
+    // index = 0;
+	
+	// for(;;) {
+		// blkSize = 0;
+		
+		// while (blkSize < blkSizeMax) {
+			// int r = fscanf(xin_file, "%d", &xin[blkSize]);
+			// if (r == 1) {
+				// blkSize++;
+			// } else if (r == EOF || r == 0) {
+				// break;
+			// } else {
+				// perror("Error reading input file");
+				// exit(EXIT_FAILURE);
+			// }
+		// }
+		
+		// if (blkSize == 0) {
+			// break;
+		// }
+		
+		// polyDec2(xin, blkSize, h, NUM_TAPS, xout, w, &index);
+		
+		// for (i=0; i<blkSize/2; i++) {
+			// fprintf(xout_file, "%d\n", xout[i]);
+		// }
+	// }
+	
 	while (fscanf(xin_file, "%d", &temp[0]) == 1) {
 		// Read the remaining elements of the block
 		for (i = 1; i < NUM_DATA; i++) {
@@ -52,7 +85,7 @@ void main() {
 		    xin[i] = temp[i];
 		}
 		
-		sympolyDec2(xin, NUM_DATA, h, NUM_TAPS, xout, w, &index);
+		polyDec2(xin, NUM_DATA, h, NUM_TAPS, xout, w, &index);
 		
 		for (i=0; i<NUM_DATA_OUTPUT; i++) {
 			fprintf(xout_file, "%d\n", xout[i]);

@@ -52,7 +52,7 @@ void main() {
 		    xin[i] = temp[i];
 		}
 		
-		sympolyDec2(xin, NUM_DATA, h, NUM_TAPS, xout, w, &index);
+		polyDec2(xin, NUM_DATA, h, NUM_TAPS, xout, w, &index);
 		
 		for (i=0; i<NUM_DATA_OUTPUT; i++) {
 			fprintf(xout_file, "%d\n", xout[i]);
