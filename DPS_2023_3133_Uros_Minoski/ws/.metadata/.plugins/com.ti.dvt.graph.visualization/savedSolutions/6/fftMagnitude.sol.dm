@@ -35,10 +35,10 @@
        </object> 
       </void> 
       <void property="blockSize1"> 
-       <int>80</int> 
+       <int>512</int> 
       </void> 
       <void property="blockSize2"> 
-       <int>80</int> 
+       <int>512</int> 
       </void> 
       <void property="dspDataType"> 
        <string>16 bit signed integer</string> 
@@ -55,10 +55,10 @@
      </object> 
     </void> 
     <void property="blockSize1"> 
-     <int>80</int> 
+     <int>512</int> 
     </void> 
     <void property="blockSize2"> 
-     <int>80</int> 
+     <int>512</int> 
     </void> 
     <void property="dspDataType"> 
      <string>16 bit signed integer</string> 
