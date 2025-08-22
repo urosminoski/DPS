@@ -33,7 +33,7 @@ _polyDec2:
 	mov		mmap(T1), BKC			; CDP buffer size order
 	mov		mmap(T1), BK47			; AR7 buffer size order
 	mov		#1, CDP					; CDP starts form 1st coeff
-	mov 	#0, AR7 				; AR7 starts from 2nd coeff
+||	mov 	#0, AR7 				; AR7 starts from 2nd coeff
 	
 	; Data buffer					; AR3 - Phase 1 buffer
 	mov 	XAR3, XAR1 				; AR1 - Phase 0 buffer
@@ -41,7 +41,7 @@ _polyDec2:
 	mov 	mmap(AR3), BSA23		; Start address for AR3
 	mov		mmap(T1), BK03 			; AR1 & AR3 buffer sizes
 	mov 	*AR4, AR1				; Points to odd samples (-> CDP)		
-	mov 	*AR4, AR3
+||	mov 	*AR4, AR3
 	amar	*AR3+					; Points to even samples (-> AR7)
 	
 	; Outer loop param
@@ -53,10 +53,10 @@ _polyDec2:
 	sub 	#3, T1, T0 				; T0 = order/2-2-1
 	mov 	T0, BRC1 				; Initialize inner loop to BRC1 = blkSize-1
 	
-	mov 	#2, T0
+||	mov 	#2, T0
 	mov 	#0, T1
 	
-	rptblocal sample_loop-1
+||	rptblocal sample_loop-1
 	mov 	*AR0+, *AR3				; First new sample goes to phase 0
 	mov 	*AR0+, *AR1				; Next new sample goes to phase 1
 	mpym	*(AR3+T0), *(CDP+T0), AC0
@@ -70,7 +70,7 @@ fir_loop
 	macm 	*AR3, *(CDP+T0), AC0
 	macm 	*AR1, *(AR7+T0), AC1
 	add 	AC0, AC1
-	mov 	rnd(hi(AC1)), *AR2+	
+||	mov 	rnd(hi(AC1)), *AR2+	
 	
 	; macmr 	*AR1, *(CDP+T0), AC0
 	; mov 	hi(AC0), T3
