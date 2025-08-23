@@ -80,14 +80,14 @@ int main(void)
     /* Run processing (adjust signature if yours differs) */
     polyDec2(x, (Int16)nIn, h, NUM_TAPS, y, w, &index);
 
-    // /* Write output */
-    // for (i = 0; i < OUT_NUM_DATA; i++) {
-        // if (fprintf(fpOut, "%hd\n", y[i]) < 0) {
-            // fprintf(stderr, "Error writing output at index %d to '%s'\n", (int)i, outFile);
-            // fclose(fpIn); fclose(fpCoeff); fclose(fpOut);
-            // return 1;
-        // }
-    // }
+    /* Write output */
+    for (i = 0; i < OUT_NUM_DATA; i++) {
+        if (fprintf(fpOut, "%hd\n", y[i]) < 0) {
+            fprintf(stderr, "Error writing output at index %d to '%s'\n", (int)i, outFile);
+            fclose(fpIn); fclose(fpCoeff); fclose(fpOut);
+            return 1;
+        }
+    }
 
     fclose(fpIn);
     fclose(fpCoeff);
