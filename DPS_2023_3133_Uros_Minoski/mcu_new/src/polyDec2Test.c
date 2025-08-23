@@ -103,7 +103,7 @@ int main(void)
 
     /* Read coefficients into global h[] */
     for (i = 0; i < NUM_TAPS; i++) {
-        if (fscanf(fpCoeff, "%hd", &h[i]) != 1) {
+        if (fscanf(fpCoeff, "%d", &h[i]) != 1) {
             fprintf(stderr, "Error reading coefficient %d from '%s'\n", (int)i, coeffFile);
             fclose(fpIn); fclose(fpCoeff); fclose(fpOut);
             return 1;
@@ -133,7 +133,7 @@ int main(void)
 	/* čitaj i obrađuj po blokovima do EOF */
     for (;;) {
         n_read = 0;
-        while (n_read < BLK_SIZE && fscanf(fpIn, "%hd", &xblk[n_read]) == 1) {
+        while (n_read < BLK_SIZE && fscanf(fpIn, "%d", &xblk[n_read]) == 1) {
             n_read++;
         }
         if (n_read == 0) break;  /* EOF */
@@ -156,7 +156,7 @@ int main(void)
 
     /* Write output */
     for (i = 0; i < OUT_NUM_DATA; i++) {
-        if (fprintf(fpOut, "%hd\n", y[i]) < 0) {
+        if (fprintf(fpOut, "%d\n", y[i]) < 0) {
             fprintf(stderr, "Error writing output at index %d to '%s'\n", (int)i, outFile);
             fclose(fpIn); fclose(fpCoeff); fclose(fpOut);
             return 1;
