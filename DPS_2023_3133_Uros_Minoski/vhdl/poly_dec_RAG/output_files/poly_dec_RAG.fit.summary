@@ -1,4 +1,4 @@
-Fitter Status : Successful - Wed Aug 13 19:30:59 2025
+Fitter Status : Successful - Sat Aug 23 20:24:25 2025
 Quartus Prime Version : 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 Revision Name : poly_dec_RAG
 Top-level Entity Name : poly_dec_RAG
@@ -6,7 +6,7 @@ Family : Cyclone V
 Device : 5CGXFC7C7F23C8
 Timing Models : Final
 Logic utilization (in ALMs) : 215 / 56,480 ( < 1 % )
-Total registers : 519
+Total registers : 516
 Total pins : 28 / 268 ( 10 % )
 Total virtual pins : 0
 Total block memory bits : 0 / 7,024,640 ( 0 % )

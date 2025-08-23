@@ -64,7 +64,7 @@ begin
 			phase_cnt_d <= phase_cnt;
 		end if;
 	end process;
-	phase_cnt_d <= phase_cnt;
+	-- phase_cnt_d <= phase_cnt;
 	
 	process(clk)
 	begin
