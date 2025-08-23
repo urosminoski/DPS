@@ -7,22 +7,26 @@
 
 /* ---- Coeffs/state must be at file scope if you want to place them via pragma ---- */
 #pragma DATA_SECTION(w, ".bss:fir");
+#pragma DATA_SECTION(h, ".const:fir");
+#pragma DATA_SECTION(x, ".bss:fir");
+#pragma DATA_SECTION(y, ".bss:fir");
+
 Int16 w[NUM_TAPS];
+Int16 h[NUM_TAPS];
+Int16 x[NUM_DATA];
+Int16 y[OUT_NUM_DATA];
 
 int main(void)
 {
     /* ---- Declarations FIRST (C89) ---- */
-    const char *inFile    = "..\\data\\mixChirp_q1n.txt";
-	const char *coeffFile = "..\\data\\coefficients_integer_for_asm.txt";
-    const char *outFile   = "..\\data\\mixChirpDec_q1n.txt";
+    const char *inFile    = "..\\data\\mixChirp_q15.txt";
+	const char *coeffFile = "..\\data\\firCoeff_q15.txt";
+    const char *outFile   = "..\\data\\mixChirpDec_q15.txt";
 
     FILE *fpIn;
     FILE *fpCoeff;
     FILE *fpOut;
 
-    Int16 x[NUM_DATA];       	/* input */
-    Int16 y[OUT_NUM_DATA];   	/* output (decimated) */
-    Int16 h[NUM_TAPS];   		/* coeffitients */
     Int16 index;             	/* delay-line index */
     Int16 i;
     int nIn;
@@ -58,23 +62,23 @@ int main(void)
         }
     }
 
-    // /* Init state and index */
-    // for (i = 0; i < NUM_TAPS; i++) w[i] = 0;
-    // index = 0;
+    /* Init state and index */
+    for (i = 0; i < NUM_TAPS; i++) w[i] = 0;
+    index = 0;
 
-    // /* Read input samples */
-    // nIn = 0;
-    // while (nIn < NUM_DATA && fscanf(fpIn, "%hd", &x[nIn]) == 1) {
-        // nIn++;
-    // }
-    // if (nIn == 0) {
-        // fprintf(stderr, "No input samples read from '%s'\n", inFile);
-        // fclose(fpIn); fclose(fpCoeff); fclose(fpOut);
-        // return 1;
-    // }
+    /* Read input samples */
+    nIn = 0;
+    while (nIn < NUM_DATA && fscanf(fpIn, "%hd", &x[nIn]) == 1) {
+        nIn++;
+    }
+    if (nIn == 0 || nIn < NUM_DATA) {
+        fprintf(stderr, "No input samples read from '%s'\n", inFile);
+        fclose(fpIn); fclose(fpCoeff); fclose(fpOut);
+        return 1;
+    }
 
-    // /* Run processing (adjust signature if yours differs) */
-    // polyDec2(x, (Int16)nIn, h, NUM_TAPS, y, w, &index);
+    /* Run processing (adjust signature if yours differs) */
+    polyDec2(x, (Int16)nIn, h, NUM_TAPS, y, w, &index);
 
     // /* Write output */
     // for (i = 0; i < OUT_NUM_DATA; i++) {
