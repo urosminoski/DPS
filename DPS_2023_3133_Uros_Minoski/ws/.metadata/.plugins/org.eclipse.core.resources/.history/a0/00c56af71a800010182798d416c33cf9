@@ -8,7 +8,7 @@
 /* ---- Coeffs/state must be at file scope if you want to place them via pragma ---- */
 #pragma DATA_SECTION(w, ".bss:fir");
 #pragma DATA_SECTION(h, ".const:fir");
-#pragma DATA_SECTION(xblk, ".bss:fir");
+#pragma DATA_SECTION(x, ".bss:fir");
 #pragma DATA_SECTION(y, ".bss:fir");
 
 Int16 w[NUM_TAPS];

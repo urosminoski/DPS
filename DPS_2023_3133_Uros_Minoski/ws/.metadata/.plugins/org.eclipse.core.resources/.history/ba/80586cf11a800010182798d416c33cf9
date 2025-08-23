@@ -8,7 +8,7 @@
 /* ---- Coeffs/state must be at file scope if you want to place them via pragma ---- */
 #pragma DATA_SECTION(w, ".bss:fir");
 #pragma DATA_SECTION(h, ".const:fir");
-#pragma DATA_SECTION(xblk, ".bss:fir");
+#pragma DATA_SECTION(x, ".bss:fir");
 #pragma DATA_SECTION(y, ".bss:fir");
 
 Int16 w[NUM_TAPS];
@@ -91,7 +91,7 @@ int main(void)
         }
         if (n_read == 0) break;  /* EOF */
 
-        polyDec2(xblk, (Int16)n_read, h, NUM_TAPS, &y[total_out], w, &index);
+        polyDec2(x_blk, (Int16)n_read, h, NUM_TAPS, &y[total_out], w, &index);
         out_this = n_read / DECIM;
 
         /* zaštita od prelivanja izlaznog bafera */
