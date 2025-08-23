@@ -31,7 +31,9 @@ void main()
 	// Open the file for reading input samples
 	test_data_file = fopen("..\\data\\input_data.dat", "w");
     input_file = fopen("..\\data\\input_signal_integer_for_asm.txt", "r");
-	coefficients_file = fopen("..\\data\\coefficients_integer_for_asm.txt", "r");
+//    input_file = fopen("..\\data\\mixChirp_q1n.txt", "r");
+//	coefficients_file = fopen("..\\data\\coefficients_integer_for_asm.txt", "r");
+	coefficients_file = fopen("..\\data\\firCoeff_q1n.txt", "r");
 	output_file = fopen("..\\data\\output_signal_decimate_asm.txt", "w");
 	
 	
@@ -61,7 +63,7 @@ void main()
 		    x[i] = temp[i];
 		}
 		
-		polyphaseDecimation(x, NUM_DATA, h, NUM_TAPS, y, w, &index);
+		polyDec2(x, NUM_DATA, h, NUM_TAPS, y, w, &index);
 		fprintf(test_data_file,"\tInt16 input_data[FFT_PTS]={\t\n");
 		for (i=0; i<NUM_DATA_OUTPUT; i++)
 		{

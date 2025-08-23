@@ -35,10 +35,10 @@
        </object> 
       </void> 
       <void property="blockSize1"> 
-       <int>2048</int> 
+       <int>1024</int> 
       </void> 
       <void property="blockSize2"> 
-       <int>2048</int> 
+       <int>1024</int> 
       </void> 
       <void property="dspDataType"> 
        <string>16 bit signed integer</string> 
@@ -55,10 +55,10 @@
      </object> 
     </void> 
     <void property="blockSize1"> 
-     <int>2048</int> 
+     <int>1024</int> 
     </void> 
     <void property="blockSize2"> 
-     <int>2048</int> 
+     <int>1024</int> 
     </void> 
     <void property="dspDataType"> 
      <string>16 bit signed integer</string> 
@@ -70,10 +70,10 @@
      <string>CCSGraphsJtagDataSource</string> 
     </void> 
     <void property="startAddress1"> 
-     <long>16376</long> 
+     <long>66137</long> 
     </void> 
     <void property="startAddress1Expr"> 
-     <string>xin</string> 
+     <string>y</string> 
     </void> 
    </object> 
   </void> 

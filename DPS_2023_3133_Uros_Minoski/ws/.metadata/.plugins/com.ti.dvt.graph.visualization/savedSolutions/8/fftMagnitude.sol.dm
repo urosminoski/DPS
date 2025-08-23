@@ -23,6 +23,9 @@
           </void> 
          </object> 
         </void> 
+        <void property="dspDataType"> 
+         <string>16 bit signed integer</string> 
+        </void> 
         <void property="graphType"> 
          <string>FFT magnitude</string> 
         </void> 
@@ -36,6 +39,9 @@
       </void> 
       <void property="blockSize2"> 
        <int>1024</int> 
+      </void> 
+      <void property="dspDataType"> 
+       <string>16 bit signed integer</string> 
       </void> 
       <void property="fftFrameSize"> 
        <int>4096</int> 
@@ -54,11 +60,20 @@
     <void property="blockSize2"> 
      <int>1024</int> 
     </void> 
+    <void property="dspDataType"> 
+     <string>16 bit signed integer</string> 
+    </void> 
     <void property="graphType"> 
      <string>FFT magnitude</string> 
     </void> 
     <void property="name"> 
      <string>CCSGraphsJtagDataSource</string> 
+    </void> 
+    <void property="startAddress1"> 
+     <long>66137</long> 
+    </void> 
+    <void property="startAddress1Expr"> 
+     <string>y</string> 
     </void> 
    </object> 
   </void> 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workbench progressCount="34" version="2.0">
 <workbenchAdvisor/>
-<window height="768" maximized="true" width="1024" x="156" y="48">
+<window height="768" maximized="true" width="1024" x="52" y="48">
 <fastViewData fastViewLocation="1024">
 <orientation position="512" view="org.eclipse.cdt.ui.CView"/>
 <orientation position="512" view="com.ti.ccstudio.system.setup.ui.views.TargetConfigurationView"/>
@@ -11,7 +11,7 @@
 </perspectiveBar>
 <coolbarLayout locked="0">
 <coolItem id="group.file" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="115" y="22"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="153" y="22"/>
 <coolItem id="additions" itemType="typeGroupMarker"/>
 <coolItem id="com.ti.ccstudio.debug.ui.DebugActionSet" itemType="typeToolBarContribution" x="107" y="22"/>
 <coolItem id="com.ti.ccstudio.debug.ui.RealTimeActionSet" itemType="typeToolBarContribution" x="61" y="22"/>
@@ -22,11 +22,12 @@
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="190" y="22"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.cdt.ui.editor.asm.AsmEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.cdt.ui.editor.CEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
-<page focus="true" label="Workspace - Debug">
+<page focus="true" label="Workspace - C/C++">
 <editors>
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
@@ -34,23 +35,22 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
+<part id="2"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="polyDec2.h" partName="polyDec2.h" path="C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/mcu/inc/polyDec2.h" title="polyDec2.h" tooltip="polyphaseDecimation/inc/polyDec2.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/polyphaseDecimation/inc/polyDec2.h"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="polyphaseDecimationTest.c" partName="polyphaseDecimationTest.c" path="C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3024_Aleksandar_Petos/asembler/polyphaseDecimation/src/polyphaseDecimationTest.c" title="polyphaseDecimationTest.c" tooltip="polyphaseDecimation/src/polyphaseDecimationTest.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/polyphaseDecimation/src/polyphaseDecimationTest.c"/>
 </editor>
-<editor focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="polyDec2Test.c" partName="polyDec2Test.c" path="C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/mcu/src/polyDec2Test.c" title="polyDec2Test.c" tooltip="polyphaseDecimation/src/polyDec2Test.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/polyphaseDecimation/src/polyDec2Test.c"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="polyphaseDecimate.h" partName="polyphaseDecimate.h" path="C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3024_Aleksandar_Petos/asembler/polyphaseDecimation/inc/polyphaseDecimate.h" title="polyphaseDecimate.h" tooltip="polyphaseDecimation/inc/polyphaseDecimate.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/polyphaseDecimation/inc/polyphaseDecimate.h"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="hwfftTest.c" partName="hwfftTest.c" path="C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3024_Aleksandar_Petos/asembler/peakDetector/src/hwfftTest.c" title="hwfftTest.c" tooltip="peakDetector/src/hwfftTest.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/peakDetector/src/hwfftTest.c"/>
 </editor>
 </editors>
 <views>
-<view id="com.ti.dvt.ui.views.line:SingleTime~0" partName="Single Time -1">
-<viewState>
-<pane IMemento.internal.id="com.ti.dvt.ui.views.line:SingleTime~0"/>
-</viewState>
-</view>
 <view id="com.ti.dvt.ui.views.line:MagnitudeOnly~4" partName="magnitude -5">
 <viewState>
 <pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~4"/>
@@ -66,20 +66,20 @@
 <cheatSheetMemento id="com.ti.ccstudio.ui.cheatsheets.first.terminate"/>
 </viewState>
 </view>
-<view id="com.ti.dvt.ui.views.line:SingleTime~1" partName="Single Time -2">
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~9" partName="magnitude -10">
 <viewState>
-<pane IMemento.internal.id="com.ti.dvt.ui.views.line:SingleTime~1"/>
+<pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~9"/>
 </viewState>
 </view>
 <view id="org.eclipse.cdt.ui.CView" partName="C/C++ Projects">
 <viewState horizontalPosition="0" verticalPosition="0">
 <expanded>
-<element path="C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\mcu"/>
-<element path="C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\mcu\inc"/>
-<element path="C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\mcu\src"/>
+<element path="C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3024_Aleksandar_Petos\asembler\peakDetector"/>
+<element path="C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3024_Aleksandar_Petos\asembler\polyphaseDecimation"/>
+<element path="C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3024_Aleksandar_Petos\asembler\polyphaseDecimation\inc"/>
 </expanded>
 <selection>
-<element path="C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/mcu"/>
+<element path="C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3024_Aleksandar_Petos/asembler/peakDetector"/>
 </selection>
 <customFilters userDefinedPatternsEnabled="false">
 <xmlDefinedFilters>
@@ -103,22 +103,20 @@
 <pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~3"/>
 </viewState>
 </view>
-<view id="com.ti.dvt.ui.views.line:SingleTime" partName="Single Time -0">
-<viewState>
-<pane IMemento.internal.id="com.ti.dvt.ui.views.line:SingleTime"/>
-</viewState>
-</view>
 <view id="com.ti.ccstudio.debug.registers.ui.Variables" partName="Local (1)">
 <viewState columnName.0="Name" columnName.1="Value" columnName.2="Address" columnName.3="Type" columnName.4="Format" columnWidth.0="150" columnWidth.1="150" columnWidth.2="150" columnWidth.3="150" columnWidth.4="80" numberOfVisibleColumns="5"/>
 </view>
-<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~6" partName="magnitude -6">
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~13" partName="magnitude -14">
+<viewState>
+<pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~13"/>
+</viewState>
+</view>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~6" partName="magnitude -7">
 <viewState>
 <pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~6"/>
 </viewState>
 </view>
-<view id="com.ti.ccstudio.debug.registers.ui.Expressions" partName="Watch (1)">
-<viewState StatesFile="C:/Users/Korisnik/Desktop/FAKS/DPS/projekat/DPS/DPS_2023_3133_Uros_Minoski/ws/.metadata/.plugins/com.ti.ccstudio.debug.registers.ui/expressions.xml" columnName.0="Name" columnName.1="Value" columnName.2="Address" columnName.3="Type" columnName.4="Format" columnWidth.0="150" columnWidth.1="150" columnWidth.2="150" columnWidth.3="150" columnWidth.4="80" numberOfVisibleColumns="5"/>
-</view>
+<view id="com.ti.ccstudio.debug.registers.ui.Expressions" partName="Watch"/>
 <view id="com.ti.dvt.ui.views.line:MagnitudeOnly~1" partName="magnitude -2">
 <viewState>
 <pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~1"/>
@@ -130,19 +128,49 @@
 <view id="org.eclipse.ui.console.ConsoleView" partName="Console">
 <viewState/>
 </view>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~12" partName="magnitude -13">
+<viewState>
+<pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~12"/>
+</viewState>
+</view>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~7" partName="magnitude -8">
+<viewState>
+<pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~7"/>
+</viewState>
+</view>
+<view id="com.ti.ccstudio.system.setup.ui.views.TargetConfigurationView" partName="Target Configurations"/>
 <view id="com.ti.dvt.ui.views.line:MagnitudeOnly~2" partName="magnitude -3">
 <viewState>
 <pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~2"/>
 </viewState>
 </view>
-<view id="com.ti.ccstudio.system.setup.ui.views.TargetConfigurationView" partName="Target Configurations"/>
 <view id="com.ti.dvt.ui.views.line:MagnitudeOnly~0" partName="magnitude -1">
 <viewState>
 <pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~0"/>
 </viewState>
 </view>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~11" partName="magnitude -12">
+<viewState>
+<pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~11"/>
+</viewState>
+</view>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~5" partName="magnitude -6">
+<viewState>
+<pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~5"/>
+</viewState>
+</view>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~8" partName="magnitude -9">
+<viewState>
+<pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~8"/>
+</viewState>
+</view>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~10" partName="magnitude -11">
+<viewState>
+<pane IMemento.internal.id="com.ti.dvt.ui.views.line:MagnitudeOnly~10"/>
+</viewState>
+</view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
-<viewState columnWidth0="396" columnWidth1="78" columnWidth2="153" columnWidth3="63" columnWidth4="0" horizontalPosition="0" verticalPosition="0">
+<viewState columnWidth0="253" columnWidth1="78" columnWidth2="153" columnWidth3="63" columnWidth4="0" horizontalPosition="0" verticalPosition="0">
 <columnOrder columnOrderIndex="0"/>
 <columnOrder columnOrderIndex="1"/>
 <columnOrder columnOrderIndex="2"/>
@@ -151,7 +179,7 @@
 </viewState>
 </view>
 </views>
-<perspectives activePart="com.ti.dvt.ui.views.line:MagnitudeOnly~6" activePerspective="org.eclipse.debug.ui.DebugPerspective">
+<perspectives activePart="org.eclipse.cdt.ui.editor.CEditor" activePerspective="org.eclipse.cdt.ui.CPerspective">
 <perspective editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.cdt.internal.ui.CPerspectiveFactory" id="org.eclipse.cdt.ui.CPerspective" label="C/C++"/>
 <alwaysOnActionSet id="com.ti.ccstudio.debug.ui.licensing"/>
@@ -245,7 +273,7 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@1fdc6f6" ratio="0.69929075" ratioLeft="493" ratioRight="212" relationship="4" relative="org.eclipse.ui.editorss">
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@e6ace7" ratio="0.69929075" ratioLeft="493" ratioRight="212" relationship="4" relative="org.eclipse.ui.editorss">
 <folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
@@ -253,7 +281,7 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@149fa1e" ratio="0.49910873" ratioLeft="280" ratioRight="281" relationship="2" relative="org.eclipse.ui.internal.ViewStack@1fdc6f6">
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@ff8f2c" ratio="0.49910873" ratioLeft="280" ratioRight="281" relationship="2" relative="org.eclipse.ui.internal.ViewStack@e6ace7">
 <folder activePageID="org.eclipse.ui.views.ProblemView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
@@ -330,13 +358,18 @@
 <view id="com.ti.dvt.ui.views.line:MagnitudeOnly"/>
 <view id="com.ti.dvt.ui.views.line:MagnitudeOnly~0"/>
 <view id="com.ti.dvt.ui.views.line:MagnitudeOnly~1"/>
-<view id="com.ti.dvt.ui.views.line:SingleTime"/>
 <view id="com.ti.dvt.ui.views.line:MagnitudeOnly~2"/>
 <view id="com.ti.dvt.ui.views.line:MagnitudeOnly~3"/>
 <view id="com.ti.dvt.ui.views.line:MagnitudeOnly~4"/>
-<view id="com.ti.dvt.ui.views.line:SingleTime~0"/>
-<view id="com.ti.dvt.ui.views.line:SingleTime~1"/>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~5"/>
 <view id="com.ti.dvt.ui.views.line:MagnitudeOnly~6"/>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~7"/>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~8"/>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~9"/>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~10"/>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~11"/>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~12"/>
+<view id="com.ti.dvt.ui.views.line:MagnitudeOnly~13"/>
 <view id="org.eclipse.ui.cheatsheets.views.CheatSheetView"/>
 <view id="org.eclipse.ui.views.ProblemView"/>
 <fastViews>
@@ -354,7 +387,7 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@8bbdab" ratio="0.7497382" ratioLeft="1432" ratioRight="478" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1fb0bfb" ratio="0.7497382" ratioLeft="1432" ratioRight="478" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
 <folder activePageID="org.eclipse.ui.views.ProblemView" appearance="2" expanded="2">
 <page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
@@ -366,8 +399,8 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@9b9e76" ratio="0.75" ratioLeft="687" ratioRight="229" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="com.ti.dvt.ui.views.line:MagnitudeOnly~6" appearance="2" expanded="2">
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1493578" ratio="0.75" ratioLeft="687" ratioRight="229" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
@@ -379,13 +412,18 @@
 <page content="com.ti.dvt.ui.views.line:MagnitudeOnly" label="magnitude -0"/>
 <page content="com.ti.dvt.ui.views.line:MagnitudeOnly~0" label="magnitude -1"/>
 <page content="com.ti.dvt.ui.views.line:MagnitudeOnly~1" label="magnitude -2"/>
-<page content="com.ti.dvt.ui.views.line:SingleTime" label="Single Time -0"/>
 <page content="com.ti.dvt.ui.views.line:MagnitudeOnly~2" label="magnitude -3"/>
 <page content="com.ti.dvt.ui.views.line:MagnitudeOnly~3" label="magnitude -4"/>
 <page content="com.ti.dvt.ui.views.line:MagnitudeOnly~4" label="magnitude -5"/>
-<page content="com.ti.dvt.ui.views.line:SingleTime~0" label="Single Time -1"/>
-<page content="com.ti.dvt.ui.views.line:SingleTime~1" label="Single Time -2"/>
-<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~6" label="magnitude -6"/>
+<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~5" label="magnitude -6"/>
+<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~6" label="magnitude -7"/>
+<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~7" label="magnitude -8"/>
+<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~8" label="magnitude -9"/>
+<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~9" label="magnitude -10"/>
+<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~10" label="magnitude -11"/>
+<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~11" label="magnitude -12"/>
+<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~12" label="magnitude -13"/>
+<page content="com.ti.dvt.ui.views.line:MagnitudeOnly~13" label="magnitude -14"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
@@ -398,6 +436,11 @@
 <part id="8"/>
 <part id="9"/>
 <part id="10"/>
+<part id="11"/>
+<part id="12"/>
+<part id="13"/>
+<part id="14"/>
+<part id="15"/>
 </presentation>
 </folder>
 </info>
@@ -411,9 +454,9 @@
 </folder>
 </info>
 <info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.5" ratioLeft="955" ratioRight="955" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
-<folder activePageID="com.ti.ccstudio.debug.registers.ui.Expressions" appearance="2" expanded="2">
+<folder activePageID="com.ti.ccstudio.debug.registers.ui.Variables" appearance="2" expanded="2">
 <page content="com.ti.ccstudio.debug.registers.ui.Variables" label="Local (1)"/>
-<page content="com.ti.ccstudio.debug.registers.ui.Expressions" label="Watch (1)"/>
+<page content="com.ti.ccstudio.debug.registers.ui.Expressions" label="Watch"/>
 <page content="com.ti.ccstudio.debug.registers.ui.Registers" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
@@ -435,22 +478,25 @@
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/polyphaseDecimation/inc/polyDec2.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/polyphaseDecimation/src/polyDec2Test.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/polyphaseDecimation/src/polyDec2Test_2.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" path="/polyphaseDecimation/src/polyphaseDecimate.asm"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/polyphaseDecimation/src/polyphaseDecimationTest.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/polyphaseDecimation/inc/polyphaseDecimate.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/peakDetector/src/hwfftTest.c"/>
 </editors>
 <item historyLabel="polyDec2.h" index="0">
 <position/>
 </item>
 <item historyLabel="polyDec2Test.c" index="1">
-<position info="not_deleted" x="1773" y="0"/>
+<position info="not_deleted" x="1074" y="0"/>
 </item>
 <item historyLabel="polyDec2Test.c" index="1">
 <position/>
 </item>
 <item historyLabel="polyDec2Test.c" index="1">
-<position/>
+<position info="not_deleted" x="955" y="0"/>
 </item>
 <item historyLabel="polyDec2Test.c" index="1">
-<position/>
+<position info="not_deleted" x="2650" y="0"/>
 </item>
 <item historyLabel="polyDec2Test.c" index="1">
 <position/>
@@ -462,94 +508,85 @@
 <position/>
 </item>
 <item historyLabel="polyDec2Test.c" index="1">
+<position info="not_deleted" x="66" y="30"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="1">
+<position info="not_deleted" x="266" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="1">
+<position info="not_deleted" x="2016" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="1">
+<position info="not_deleted" x="266" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="1">
+<position info="not_deleted" x="2000" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="1">
+<position info="not_deleted" x="266" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="1">
+<position info="not_deleted" x="2016" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="1">
+<position info="not_deleted" x="266" y="0"/>
+</item>
+<item historyLabel="polyDec2Test.c" index="1">
+<position info="not_deleted" x="1618" y="0"/>
+</item>
+<item historyLabel="polyphaseDecimate.asm" index="2">
 <position/>
 </item>
 <item historyLabel="polyDec2Test.c" index="1">
+<position info="not_deleted" x="266" y="0"/>
+</item>
+<item historyLabel="polyphaseDecimationTest.c" index="3">
+<position info="not_deleted" x="1647" y="62"/>
+</item>
+<item historyLabel="polyphaseDecimationTest.c" index="3">
+<position info="not_deleted" x="275" y="0"/>
+</item>
+<item historyLabel="polyphaseDecimationTest.c" index="3">
+<position info="not_deleted" x="1721" y="0"/>
+</item>
+<item historyLabel="polyphaseDecimate.h" index="4">
 <position/>
 </item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
+<item historyLabel="polyphaseDecimationTest.c" index="3">
+<position info="not_deleted" x="275" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
+<item historyLabel="polyphaseDecimationTest.c" index="3">
+<position info="not_deleted" x="974" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position info="not_deleted" x="3184" y="0"/>
+<item historyLabel="polyphaseDecimate.h" index="4">
+<position info="not_deleted" x="26" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
+<item historyLabel="polyphaseDecimationTest.c" index="3">
+<position info="not_deleted" x="275" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position info="not_deleted" x="2642" y="0"/>
+<item historyLabel="polyphaseDecimationTest.c" index="3">
+<position info="not_deleted" x="1764" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
+<item historyLabel="polyphaseDecimationTest.c" index="3">
+<position info="not_deleted" x="794" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position info="not_deleted" x="1137" y="0"/>
+<item historyLabel="polyphaseDecimationTest.c" index="3">
+<position info="not_deleted" x="275" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
+<item historyLabel="polyphaseDecimationTest.c" index="3">
+<position info="not_deleted" x="1764" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position info="not_deleted" x="3946" y="0"/>
+<item historyLabel="polyphaseDecimate.h" index="4">
+<position info="not_deleted" x="26" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
+<item historyLabel="polyphaseDecimationTest.c" index="3">
+<position info="not_deleted" x="275" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position info="not_deleted" x="3971" y="0"/>
+<item historyLabel="polyphaseDecimationTest.c" index="3">
+<position info="not_deleted" x="2004" y="0"/>
 </item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position info="not_deleted" x="3606" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position info="not_deleted" x="4195" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position info="not_deleted" x="4195" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position/>
-</item>
-<item historyLabel="polyDec2Test_2.c" index="2">
-<position info="not_deleted" x="2034" y="22"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position info="not_deleted" x="2994" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position info="not_deleted" x="2997" y="0"/>
-</item>
-<item historyLabel="polyDec2Test.c" index="1">
-<position info="not_deleted" x="1061" y="0"/>
-</item>
-<item active="true" historyLabel="polyDec2Test.c" index="1">
-<position info="not_deleted" x="2196" y="0"/>
+<item active="true" historyLabel="hwfftTest.c" index="5">
+<position info="not_deleted" x="1368" y="0"/>
 </item>
 </navigationHistory>
 <stickyState>
@@ -576,14 +613,14 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="polyDec2Test_2.c" tooltip="polyphaseDecimation/src/polyDec2Test_2.c">
-<persistable path="/polyphaseDecimation/src/polyDec2Test_2.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="hwfftTest.c" tooltip="peakDetector/src/hwfftTest.c">
+<persistable path="/peakDetector/src/hwfftTest.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="polyDec2Test.c" tooltip="polyphaseDecimation/src/polyDec2Test.c">
-<persistable path="/polyphaseDecimation/src/polyDec2Test.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="polyphaseDecimate.h" tooltip="polyphaseDecimation/inc/polyphaseDecimate.h">
+<persistable path="/polyphaseDecimation/inc/polyphaseDecimate.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="polyDec2.h" tooltip="polyphaseDecimation/inc/polyDec2.h">
-<persistable path="/polyphaseDecimation/inc/polyDec2.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="polyphaseDecimationTest.c" tooltip="polyphaseDecimation/src/polyphaseDecimationTest.c">
+<persistable path="/polyphaseDecimation/src/polyphaseDecimationTest.c"/>
 </file>
 </mruList>
 </workbench>

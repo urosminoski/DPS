@@ -1,6 +1,6 @@
 
 
-#define NUM_TAPS			22
+#define NUM_TAPS			21
 #define NUM_DATA   			2048
 #define FACTOR	 			2
 #define NUM_DATA_OUTPUT 	NUM_DATA/FACTOR

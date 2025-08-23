@@ -9,7 +9,7 @@
        <string>CircularBuffer</string> 
       </void> 
       <void property="target"> 
-       <string>com.ti.dvt.ui.views.line:MagnitudeOnly~2</string> 
+       <string>com.ti.dvt.ui.views.line:MagnitudeOnly~3</string> 
       </void> 
      </object> 
     </void> 
@@ -17,13 +17,13 @@
   </void> 
   <void property="viewInfoMap"> 
    <void method="put"> 
-    <string>com.ti.dvt.ui.views.line:MagnitudeOnly~2</string> 
+    <string>com.ti.dvt.ui.views.line:MagnitudeOnly~3</string> 
     <object class="com.ti.dvt.ui.views.core.ViewInfo"> 
      <void property="paneInfoColl"> 
       <void method="add"> 
        <object class="com.ti.dvt.ui.views.core.PaneInfo"> 
         <void property="ID"> 
-         <string>com.ti.dvt.ui.views.line:MagnitudeOnly~2</string> 
+         <string>com.ti.dvt.ui.views.line:MagnitudeOnly~3</string> 
         </void> 
         <void property="pageContext"> 
          <string>Texas Instruments XDS100v2 USB Emulator_0/C55xx</string> 
@@ -44,10 +44,10 @@
             <boolean>true</boolean> 
            </void> 
            <void property="end"> 
-            <double>1.05</double> 
+            <double>188184.33052763442</double> 
            </void> 
            <void property="start"> 
-            <double>-0.05</double> 
+            <double>-8943.12376915103</double> 
            </void> 
           </void> 
           <void property="backgroundRGB"> 
@@ -91,10 +91,10 @@
       </void> 
      </void> 
      <void property="title"> 
-      <string>magnitude -3</string> 
+      <string>magnitude -4</string> 
      </void> 
      <void property="titleField"> 
-      <string>magnitude -3</string> 
+      <string>magnitude -4</string> 
      </void> 
     </object> 
    </void> 

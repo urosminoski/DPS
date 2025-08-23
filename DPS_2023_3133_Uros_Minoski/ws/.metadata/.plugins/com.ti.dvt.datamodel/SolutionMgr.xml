@@ -18,7 +18,7 @@
     <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\3\fftMagnitude</string> 
    </void> 
    <void method="add"> 
-    <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\4\singletime</string> 
+    <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\4\fftMagnitude</string> 
    </void> 
    <void method="add"> 
     <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\5\fftMagnitude</string> 
@@ -33,13 +33,25 @@
     <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\8\fftMagnitude</string> 
    </void> 
    <void method="add"> 
-    <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\9\singletime</string> 
+    <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\9\fftMagnitude</string> 
    </void> 
    <void method="add"> 
-    <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\10\singletime</string> 
+    <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\10\fftMagnitude</string> 
    </void> 
    <void method="add"> 
     <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\11\fftMagnitude</string> 
+   </void> 
+   <void method="add"> 
+    <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\12\fftMagnitude</string> 
+   </void> 
+   <void method="add"> 
+    <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\13\fftMagnitude</string> 
+   </void> 
+   <void method="add"> 
+    <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\14\fftMagnitude</string> 
+   </void> 
+   <void method="add"> 
+    <string>C:\Users\Korisnik\Desktop\FAKS\DPS\projekat\DPS\DPS_2023_3133_Uros_Minoski\ws\.metadata\.plugins\com.ti.dvt.graph.visualization\savedSolutions\\15\fftMagnitude</string> 
    </void> 
   </void> 
  </object> 

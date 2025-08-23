@@ -70,10 +70,10 @@
      <string>CCSGraphsJtagDataSource</string> 
     </void> 
     <void property="startAddress1"> 
-     <long>22520</long> 
+     <long>66137</long> 
     </void> 
     <void property="startAddress1Expr"> 
-     <string>xout</string> 
+     <string>y</string> 
     </void> 
    </object> 
   </void> 

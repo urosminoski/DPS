@@ -1,88 +1,84 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 #include "tistdtypes.h"
 #include "polyDec2.h"
 
-/* ---- Kompleksni tip (Q15) ---- */
-typedef struct { Int16 re, im; } complex;
 
-/* ---- HWA FFT ---- */
-#define FFT_FLAG   0
-#define IFFT_FLAG  1
-#define SCALE_FLAG 0
-#define FFT_PTS    NUM_DATA_OUTPUT   /* hwafft_1024pts */
-
-/* decimacija /2 */
-#define DECIM_FACTOR     2
-
-#ifndef MIN
-#define MIN(a,b) ((a)<(b)?(a):(b))
-#endif
-
-/* ---- HWA prototipi ---- */
-extern Uint16 hwafft_1024pts(Int32 *, Int32 *, Int16, Int16);
-extern Uint16 hwafft_br     (Int32 *, Int32 *, Int16);
-
-/* ---- Sekcije / poravnanje (TI pragmas) ---- */
-#pragma DATA_SECTION(X, "data_br_buf");
-#pragma DATA_ALIGN(X, 2*FFT_PTS)
-static complex X[FFT_PTS];
-
-#pragma DATA_SECTION(temp, "scratch_buf");
-#pragma DATA_ALIGN(temp, 2*FFT_PTS)
-static complex temp[FFT_PTS];   /* scratch za bit-reversal */
-
+/* Define DSP system memory map */
 #pragma DATA_SECTION(h, ".const:fir");
 #pragma DATA_SECTION(w, ".bss:fir");
-static Int16 w[NUM_TAPS];
-static Int16 h[NUM_TAPS];
 
-int main(void) {
-    FILE  *fpIn,*fpOut;
-    Int16 i,k,c,
+
+
+Int16 w[NUM_TAPS];
+Int16 h[NUM_TAPS];
+void main()
+{
+
+
+    // Open the file for writing in binary mode
+    FILE *test_data_file;
+    FILE *input_file, *coefficients_file;
+    FILE *output_file;
+    Int16 i,num_values,
 		  index;        // Delay line index
     Int16 x[NUM_DATA],  // Input data
 		  y[NUM_DATA];  // Output data
-    Int8  temp[NUM_DATA*2];
-    Uint8 waveHeader[44];
+    Int16  temp[NUM_DATA];
+    
+	// Open the file for reading input samples
+	test_data_file = fopen("..\\data\\input_data.dat", "w");
+    input_file = fopen("..\\data\\input_signal_integer_for_asm.txt", "r");
+	coefficients_file = fopen("..\\data\\firCoeff_q1n.txt", "r");
+	output_file = fopen("..\\data\\output_signal_decimate_asm.txt", "w");
 	
-	fpIn = fopen("..\\data\\input.wav", "rb");
-    fpOut = fopen("..\\data\\output.wav", "wb");
-	if (!fpIn) { perror("Error opening: ..\\data\\input.pcm"); return 1; }
-	if (!fpOut) { perror("Error opening: ..\\data\\output.pcm"); return 1; }
-	
-	/* Read header */
-	fread(waveHeader, sizeof(Int8), 44, fpIn);
-    fwrite(waveHeader, sizeof(Int8), 44, fpOut);
-	
-	/* Inicijalizuj stanje filtra */
-    memset(w, 0, sizeof(w));
-    index = 0;
-	
-	// Begin filtering the data
-    while (fread(temp, sizeof(Int8), NUM_DATA*2, fpIn) == (NUM_DATA*2))
-    {
-        for (k=0, i=0; i<NUM_DATA; i++)
-        {
-            x[i] = (temp[k]&0xFF)|(temp[k+1]<<8);
-            k += 2;
-        }
-        // Filter the data x and save output y
-        polyDec2(x, NUM_DATA, h, NUM_TAPS, y, w, &index);
-
-        for (k=0, i=0; i<NUM_DATA; i++)
-        {
-            temp[k++] = (y[i]&0xFF);
-            temp[k++] = (y[i]>>8)&0xFF;
-        }
-        fwrite(temp, sizeof(Int8), NUM_DATA*2, fpOut);
+	num_values = 0;
+	while (num_values < NUM_TAPS && fscanf(coefficients_file, "%d", &h[num_values]) == 1) {
+        num_values++;
     }
+    // Initialize for filtering process
+    for (i=0; i<NUM_TAPS; i++)
+    {
+        w[i] = 0;
+    }
+    index = 0;
 
-    fclose(fpIn);
-    fclose(fpOut);
+	while (fscanf(input_file, "%d", &temp[0]) == 1) {
+		// Read the remaining elements of the block
+		for (i = 1; i < NUM_DATA; i++) {
+		    if (fscanf(input_file, "%d", &temp[i]) != 1) {
+				perror("Error reading input file");
+		        exit(0);
+		    }
+		}
+		
+		// Process the data in blocks of NUM_DATA
+		for (i = 0; i < NUM_DATA; i++) {
+		    x[i] = temp[i];
+		}
+		
+		polyDec2(x, NUM_DATA, h, NUM_TAPS, y, w, &index);
+		fprintf(test_data_file,"\tInt16 input_data[FFT_PTS]={\t\n");
+		for (i=0; i<NUM_DATA_OUTPUT; i++)
+		{
+		    fprintf(output_file, "%d\n", y[i]);
+		    if(i == NUM_DATA_OUTPUT-1){
+		    	fprintf(test_data_file, "0x%x\n", y[i]);
+		    }
+		    else{
+		    	fprintf(test_data_file, "0x%x,\n", y[i]);
+		    }
+		     
+		}
+		fprintf(test_data_file, "\t};\t");
+		break;    
+	}
+	
 
+	fclose(input_file);
+	fclose(coefficients_file);
+	fclose(output_file);
+	fclose(test_data_file);
     printf("\nExp --- completed\n");
-   
-    return 0;
 }
+

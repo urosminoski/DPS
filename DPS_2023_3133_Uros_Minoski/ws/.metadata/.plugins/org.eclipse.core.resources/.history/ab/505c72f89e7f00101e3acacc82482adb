@@ -1,0 +1,96 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "tistdtypes.h"
+#include "polyDec2.h"
+
+/* ---- Kompleksni tip (Q15) ---- */
+typedef struct { Int16 re, im; } complex;
+
+/* ---- HWA FFT ---- */
+#define FFT_FLAG   0
+#define IFFT_FLAG  1
+#define SCALE_FLAG 0
+#define FFT_PTS    NUM_DATA_OUTPUT   /* hwafft_1024pts */
+
+/* decimacija /2 */
+#define DECIM_FACTOR     2
+
+#ifndef MIN
+#define MIN(a,b) ((a)<(b)?(a):(b))
+#endif
+
+/* ---- HWA prototipi ---- */
+extern Uint16 hwafft_1024pts(Int32 *, Int32 *, Int16, Int16);
+extern Uint16 hwafft_br     (Int32 *, Int32 *, Int16);
+
+/* ---- Sekcije / poravnanje (TI pragmas) ---- */
+#pragma DATA_SECTION(X, "data_br_buf");
+#pragma DATA_ALIGN(X, 2*FFT_PTS)
+static complex X[FFT_PTS];
+
+#pragma DATA_SECTION(temp, "scratch_buf");
+#pragma DATA_ALIGN(temp, 2*FFT_PTS)
+static complex temp[FFT_PTS];   /* scratch za bit-reversal */
+
+#pragma DATA_SECTION(h, ".const:fir");
+#pragma DATA_SECTION(w, ".bss:fir");
+static Int16 w[NUM_TAPS];
+
+int main(void) {
+    FILE  *fpIn,*fpOut;
+    Int16 i,k,c,
+		  index;        // Delay line index
+    Int16 x[NUM_DATA],  // Input data
+		  h[NUM_TAPS],
+		  y[NUM_DATA];  // Output data
+    Int8  tempData[NUM_DATA*2], tempCoeff[NUM_TAPS*2];
+    Uint8 waveHeader[44];
+	
+	fpIn = fopen("..\\data\\input.wav", "rb");
+    fpOut = fopen("..\\data\\output.wav", "wb");
+	if (!fpIn) { perror("Error opening: ..\\data\\input.pcm"); return 1; }
+	if (!fpOut) { perror("Error opening: ..\\data\\output.pcm"); return 1; }
+	
+	/* Read header */
+	fread(waveHeader, sizeof(Int8), 44, fpIn);
+    fwrite(waveHeader, sizeof(Int8), 44, fpOut);
+	
+	/* Inicijalizuj stanje filtra */
+    memset(w, 0, sizeof(w));
+    index = 0;
+	
+	// Read Coeffs
+	while (fread(tempCoeff, sizeof(Int8), NUM_TAPS*2, fpIn) == (NUM_TAPS*2)) {
+		for (k=0, i=0; i<NUM_TAPS; i++) {
+			h[i] = (tempCoeff[k]&0xFF)|(tempCoeff[k+1]<<8);
+			k += 2;
+		}
+	}
+	
+	// Begin filtering the data
+    while (fread(tempData, sizeof(Int8), NUM_DATA*2, fpIn) == (NUM_DATA*2))
+    {
+        for (k=0, i=0; i<NUM_DATA; i++)
+        {
+            x[i] = (tempData[k]&0xFF)|(tempData[k+1]<<8);
+            k += 2;
+        }
+        // Filter the data x and save output y
+        polyDec2(x, NUM_DATA, h, NUM_TAPS, y, w, &index);
+
+        for (k=0, i=0; i<NUM_DATA; i++)
+        {
+            tempData[k++] = (y[i]&0xFF);
+            tempData[k++] = (y[i]>>8)&0xFF;
+        }
+        fwrite(tempData, sizeof(Int8), NUM_DATA*2, fpOut);
+    }
+
+    fclose(fpIn);
+    fclose(fpOut);
+
+    printf("\nExp --- completed\n");
+   
+    return 0;
+}
