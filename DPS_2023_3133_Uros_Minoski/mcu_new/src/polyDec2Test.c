@@ -172,7 +172,6 @@ int main(void)
         return 1;
     }
 	
-	
 	for (i=0; i<FFT_PTS; i++) {
         X[i].re = y[i];
         X[i].im = 0;
@@ -190,9 +189,9 @@ int main(void)
         }
     }
 	
-	for (i=0; i<OUT_NUM_DATA; i++) {
-		yFFT[i] = X[i].re;
-	}
+	// for (i=0; i<OUT_NUM_DATA; i++) {
+		// yFFT[i] = X[i].re;
+	// }
 	
 	fclose(fpOutFFT);
 	

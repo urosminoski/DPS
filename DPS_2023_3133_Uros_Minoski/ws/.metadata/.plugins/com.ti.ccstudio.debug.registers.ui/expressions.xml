@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<States>
+<Expressions>
+<Expression IMemento.internal.id="OUT_NUM_DATA">
+<Format/>
+</Expression>
+<Expression IMemento.internal.id="y">
+<Format/>
+</Expression>
+<Expression IMemento.internal.id="i">
+<Format/>
+</Expression>
+<Expression IMemento.internal.id="found">
+<Format/>
+</Expression>
+<Expression IMemento.internal.id="idx1">
+<Format/>
+</Expression>
+<Expression IMemento.internal.id="n">
+<Format/>
+</Expression>
+<Expression IMemento.internal.id="v">
+<Format/>
+</Expression>
+<Expression IMemento.internal.id="va">
+<Format/>
+</Expression>
+<Expression IMemento.internal.id="k">
+<Format/>
+</Expression>
+<Expression IMemento.internal.id="a">
+<Format/>
+</Expression>
+</Expressions>
+</States>
