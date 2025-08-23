@@ -47,8 +47,11 @@ Int16 y[OUT_NUM_DATA];
 
 Int16 yFFT[OUT_NUM_DATA];
 
-extern   Uint16 hwafft_1024pts(Int32 *, Int32 *, Int16, Int16);
-extern   Uint16 hwafft_br(Int32 *, Int32 *, Int16);
+extern 	Uint16 hwafft_1024pts(Int32 *, Int32 *, Int16, Int16);
+extern 	Uint16 hwafft_br(Int32 *, Int32 *, Int16);
+static 	Int16 abs16_sat(Int16 a);
+int top2_nms_abs(const complex *x, int n, int radius,
+                 int *i1, Int16 *v1, int *i2, Int16 *v2);
 
 int main(void)
 {
@@ -69,6 +72,12 @@ int main(void)
     int out_this;          /* broj izlaza iz trenutnog bloka */
     long total_in = 0;
     long total_out = 0;    /* koliko smo popunili u y[] */
+	
+	Int16 val1, val2;
+	int idx1, idx2;
+	int found;
+	
+	const float factor = 0.0183125;
 
     /* ---- Now statements ---- */
     fpIn = fopen(inFile, "r");
@@ -187,6 +196,56 @@ int main(void)
 	
 	fclose(fpOutFFT);
 	
+	found = top2_nms_abs(X, OUT_NUM_DATA/2, 10, &idx1, &val1, &idx2, &val2);
+	
+	if (found == 0) {
+        printf("Nema pikova.\n");
+    } else if (found == 1) {
+        printf("Pik1: k=%.3f m, amp=%d\n", idx1 * factor, (int)val1);
+    } else { /* found == 2 */
+        printf("Pik1: k=%.3f m, amp=%d\n", idx1 * factor, (int)val1);
+        printf("Pik2: k=%.3f m, amp=%d\n", idx2 * factor, (int)val2);
+    }
+    	
     printf("\nExp --- completed\n");
     return 0;
+}
+
+static Int16 abs16_sat(Int16 a) {
+    return (a == (Int16)-32768) ? (Int16)32767 : (a < 0 ? (Int16)(-a) : a);
+}
+
+/* Nađi 1–2 najveća pika po |x| uz potiskivanje prozora ±radius oko prvog.
+   x,n      : ulazni niz i dužina
+   radius   : poluprečnik zabrane oko prvog pika (u uzorcima/binovima)
+   i1,v1    : izlaz (indeks i amplituda 1. pika, po apsolutnoj vrednosti)
+   i2,v2    : izlaz (indeks i amplituda 2. pika, ako postoji)
+   return   : 1 ili 2 (koliko je pikova nađeno)
+*/
+int top2_nms_abs(const complex *x, int n, int radius,
+                 int *i1, Int16 *v1, int *i2, Int16 *v2) {
+	int k, a = -1, b = -1, d = 0;
+	Int16 va = 0, vb = 0, v = 0;
+	
+	/* 1) Globalni maksimum po |x| */
+	for (k=0; k<n; k++) {
+		v = abs16_sat(x[k].re);
+		if (a < 0 || v > va) { a = k; va = v; }
+	}
+	if (a < 0) return 0;
+	
+	*i1 = a; *v1 = va;
+
+	/* 2) Drugi maksimum van prozora [a - radius, a + radius] */
+	for (k=0; k<n; k++) {
+		d = k - a; if (d < 0) d = -d;
+		if (d <= radius) continue;
+		
+		v = abs16_sat(x[k].re);
+		if (b < 0 || v > vb) {b = k; vb = v;}
+	}
+	if (b < 0) return 1;
+	
+	*i2 = b; *v2 = vb;
+	return 2;
 }
